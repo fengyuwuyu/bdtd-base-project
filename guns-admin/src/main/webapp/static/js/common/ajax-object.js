@@ -1,12 +1,15 @@
 (function () {
+	var errorFunc = function (data) {
+        Feng.error("重置密码失败!");
+    };
 	var $ax = function (url, success, error) {
 		this.url = url;
 		this.type = "post";
 		this.data = {};
 		this.dataType = "json";
-		this.async = false;
+		this.async = true;
 		this.success = success;
-		this.error = error;
+		this.error = error || errorFunc;
 	};
 	
 	$ax.prototype = {

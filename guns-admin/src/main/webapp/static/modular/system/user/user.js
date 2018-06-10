@@ -159,7 +159,7 @@ MgrUser.resetPwd = function () {
         var userId = this.seItem.id;
         parent.layer.confirm('是否重置密码为111111？', {
             btn: ['确定', '取消'],
-            shade: false //不显示遮罩
+            shade: true //不显示遮罩
         }, function () {
             var ajax = new $ax(Feng.ctxPath + "/mgr/reset", function (data) {
                 Feng.success("重置密码成功!");

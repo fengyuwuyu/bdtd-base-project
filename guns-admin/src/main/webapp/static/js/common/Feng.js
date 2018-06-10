@@ -145,5 +145,11 @@ var Feng = {
         }
         var result = strArr.join('');
         return result.charAt(0).toUpperCase() + result.substring(1);
-    }
+    },
+	fixWidth : function(percent) {
+		if (percent == null) {
+			percent = 1;
+		}
+		return document.body.clientWidth * percent;
+	}
 };

@@ -55,12 +55,21 @@ public class ToolUtil {
      * @Date 2017/4/18 12:55
      */
     public static String dateType(Object o) {
-        if (o instanceof Date) {
-            return DateUtil.getDay((Date) o);
+    	if (o instanceof java.sql.Date) {
+    		return DateUtil.getDay((Date) o);
+    	} else if (o instanceof Date) {
+            return DateUtil.format((Date) o, "yyyy-MM-dd HH:mm:ss");
         } else {
             return o.toString();
         }
     }
+    
+    public static void main(String[] args) {
+		Date date = new Date();
+		System.out.println(dateType(date));
+		java.sql.Date d = new java.sql.Date(System.currentTimeMillis());
+		System.out.println(dateType(d));
+	}
 
     /**
      * 获取异常的具体信息
