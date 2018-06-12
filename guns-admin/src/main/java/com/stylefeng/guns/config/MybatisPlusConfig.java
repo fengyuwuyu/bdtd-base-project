@@ -1,5 +1,18 @@
 package com.stylefeng.guns.config;
 
+import java.beans.PropertyVetoException;
+import java.sql.SQLException;
+import java.util.HashMap;
+
+import javax.sql.DataSource;
+
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
@@ -8,15 +21,6 @@ import com.stylefeng.guns.core.datascope.DataScopeInterceptor;
 import com.stylefeng.guns.core.datasource.DruidProperties;
 import com.stylefeng.guns.core.mutidatasource.DynamicDataSource;
 import com.stylefeng.guns.core.mutidatasource.config.MutiDataSourceProperties;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import java.sql.SQLException;
-import java.util.HashMap;
 
 /**
  * MybatisPlus配置
@@ -57,10 +61,10 @@ public class MybatisPlusConfig {
     /**
      * 单数据源连接池配置
      */
-    @Bean
+    @Bean(name="bizDataSource")
     @ConditionalOnProperty(prefix = "guns", name = "muti-datasource-open", havingValue = "false")
-    public DruidDataSource singleDatasource() {
-        return dataSourceGuns();
+    public DataSource singleDatasource() throws PropertyVetoException{
+ 	   return dataSourceGuns();  
     }
 
     /**
