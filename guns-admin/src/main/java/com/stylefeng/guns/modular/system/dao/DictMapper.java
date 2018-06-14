@@ -20,10 +20,12 @@ public interface DictMapper extends BaseMapper<Dict> {
     /**
      * 根据编码获取词典列表
      */
-    List<Dict> selectByCode(@Param("code") String code);
+    List<Dict> selectByParentName(@Param("parentName") String parentName);
 
     /**
      * 查询字典列表
      */
     List<Map<String, Object>> list(@Param("condition") String conditiion);
+
+	List<Map<String, Object>> selectDictMapList();
 }

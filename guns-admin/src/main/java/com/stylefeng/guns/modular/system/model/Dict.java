@@ -18,30 +18,42 @@ import java.io.Serializable;
 @TableName("sys_dict")
 public class Dict extends Model<Dict> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 主键id
-     */
-	@TableId(value="id", type= IdType.AUTO)
+	/**
+	 * 主键id
+	 */
+	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
-    /**
-     * 排序
-     */
+	/**
+	 * 排序
+	 */
 	private Integer num;
-    /**
-     * 父级字典
-     */
+	/**
+	 * 父级字典
+	 */
 	private Integer pid;
-    /**
-     * 名称
-     */
+	/**
+	 * 名称
+	 */
 	private String name;
-    /**
-     * 提示
-     */
+	/**
+	 * 提示
+	 */
 	private String tips;
 
+	public Dict() {
+		super();
+	}
+
+	public Dict(Integer id, Integer num, Integer pid, String name, String tips) {
+		super();
+		this.id = id;
+		this.num = num;
+		this.pid = pid;
+		this.name = name;
+		this.tips = tips;
+	}
 
 	public Integer getId() {
 		return id;
@@ -90,12 +102,6 @@ public class Dict extends Model<Dict> {
 
 	@Override
 	public String toString() {
-		return "Dict{" +
-			"id=" + id +
-			", num=" + num +
-			", pid=" + pid +
-			", name=" + name +
-			", tips=" + tips +
-			"}";
+		return "Dict{" + "id=" + id + ", num=" + num + ", pid=" + pid + ", name=" + name + ", tips=" + tips + "}";
 	}
 }

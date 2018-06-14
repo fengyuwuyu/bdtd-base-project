@@ -64,6 +64,8 @@ DictInfoDlg.collectData = function () {
     var mutiString = "";
     $("[name='dictItem']").each(function(){
         var num = $(this).find("[name='itemNum']").val();
+        num = num | '';
+        console.log(num)
         var name = $(this).find("[name='itemName']").val();
         mutiString = mutiString + (num + ":" + name + ";");
     });

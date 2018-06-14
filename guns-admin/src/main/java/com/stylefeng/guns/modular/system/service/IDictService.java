@@ -31,13 +31,15 @@ public interface IDictService extends IService<Dict> {
     void delteDict(Integer dictId);
 
     /**
-     * 根据编码获取词典列表
+     * 根据上级名称获取词典列表
      */
-    List<Dict> selectByCode(@Param("code") String code);
+    List<Dict> selectByParentName(@Param("name") String name);
 
     /**
      * 查询字典列表
      */
     List<Map<String, Object>> list(@Param("condition") String conditiion);
+    
+    
 
 }

@@ -15,11 +15,10 @@
 		id, num, pid, name, tips
 	</sql>
 
-    <select id="selectByCode" resultType="dict">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_dict
-        where code = #{code}
+    <select id="selectByParentName" resultMap="BaseResultMap">
+        select b.num, b.name
+        from sys_dict a left join sys_dict b on b.pid = a.id
+        where a.name = #{parentName}
     </select>
 
     <select id="list" resultType="map">
@@ -29,6 +28,11 @@
             AND name like CONCAT('%',#{condition},'%')
         </if>
         order by id ASC
+    </select>
+    
+    <select id="selectDictMapList" resultType="map">
+    	select a.*, b.name as parentName, concat(b.name, '-', a.num) as `key` from sys_dict a 
+    		left join sys_dict b on a.pid = b.id where b.name is not null
     </select>
 
 </mapper>

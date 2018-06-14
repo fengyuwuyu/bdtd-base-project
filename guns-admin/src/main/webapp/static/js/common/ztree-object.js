@@ -70,6 +70,7 @@
 		 */
 		loadNodes : function() {
 			var zNodes = null;
+			console.log(Feng.ctxPath + this.url);
 			var ajax = new $ax(Feng.ctxPath + this.url, function(data) {
 				zNodes = data;
 			}, function(data) {

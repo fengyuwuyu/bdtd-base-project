@@ -1,15 +1,14 @@
 package com.stylefeng.guns.modular.code.factory;
 
 
-import com.stylefeng.guns.GunsApplication;
-import com.stylefeng.guns.core.CoreFlag;
-import com.stylefeng.guns.core.util.ToolUtil;
-import com.stylefeng.guns.generator.action.model.GenQo;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.stylefeng.guns.core.CoreFlag;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.generator.action.model.GenQo;
 
 /**
  * 模板种类构建器
@@ -43,8 +42,8 @@ public class DefaultTemplateFactory {
     public static GenQo getDefaultParams(){
         GenQo genQo = new GenQo();
         genQo.setProjectPath(ToolUtil.getWebRootPath(null));
-        genQo.setAuthor("stylefeng");
-        genQo.setProjectPackage(GunsApplication.class.getPackage().getName());
+        genQo.setAuthor("lilei");
+        genQo.setProjectPackage("com.bdtd.card.registration");
         genQo.setCorePackage(CoreFlag.class.getPackage().getName());
         genQo.setIgnoreTabelPrefix("sys_");
         genQo.setModuleName("system");

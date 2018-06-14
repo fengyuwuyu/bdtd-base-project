@@ -75,7 +75,6 @@ public class DeptController extends BaseController {
     @ResponseBody
     public List<ZTreeNode> tree() {
         List<ZTreeNode> tree = this.deptService.tree();
-        tree.add(ZTreeNode.createParent());
         return tree;
     }
 

@@ -205,7 +205,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public List<ZTreeNode> roleTreeList() {
         List<ZTreeNode> roleTreeList = this.roleService.roleTreeList();
-        roleTreeList.add(ZTreeNode.createParent());
+//        roleTreeList.add(ZTreeNode.createParent());
         return roleTreeList;
     }
 

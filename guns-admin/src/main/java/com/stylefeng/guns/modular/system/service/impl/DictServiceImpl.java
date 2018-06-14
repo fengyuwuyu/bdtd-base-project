@@ -1,5 +1,17 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import static com.stylefeng.guns.core.common.constant.factory.MutiStrFactory.MUTI_STR_KEY;
+import static com.stylefeng.guns.core.common.constant.factory.MutiStrFactory.MUTI_STR_VALUE;
+import static com.stylefeng.guns.core.common.constant.factory.MutiStrFactory.parseKeyValue;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -8,19 +20,12 @@ import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.modular.system.dao.DictMapper;
 import com.stylefeng.guns.modular.system.model.Dict;
 import com.stylefeng.guns.modular.system.service.IDictService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
-
-import static com.stylefeng.guns.core.common.constant.factory.MutiStrFactory.*;
 
 @Service
 @Transactional
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements IDictService {
 
+	private static final String DEFAULT_DICT_VALUE = "-1";
     @Resource
     private DictMapper dictMapper;
 
@@ -43,17 +48,23 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         this.dictMapper.insert(dict);
 
         //添加字典条目
+        int index = 1;
         for (Map<String, String> item : items) {
             String num = item.get(MUTI_STR_KEY);
             String name = item.get(MUTI_STR_VALUE);
             Dict itemDict = new Dict();
             itemDict.setPid(dict.getId());
             itemDict.setName(name);
-            try {
-                itemDict.setNum(Integer.valueOf(num));
-            } catch (NumberFormatException e) {
-                throw new GunsException(BizExceptionEnum.DICT_MUST_BE_NUMBER);
+            if (DEFAULT_DICT_VALUE.equals(num)) {
+            	itemDict.setNum(index);
+            } else {
+            	try {
+                    itemDict.setNum(Integer.valueOf(num));
+                } catch (NumberFormatException e) {
+                    throw new GunsException(BizExceptionEnum.DICT_MUST_BE_NUMBER);
+                }
             }
+            index++;
             this.dictMapper.insert(itemDict);
         }
     }
@@ -79,8 +90,8 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     }
 
     @Override
-    public List<Dict> selectByCode(String code) {
-        return this.baseMapper.selectByCode(code);
+    public List<Dict> selectByParentName(String parentName) {
+        return this.baseMapper.selectByParentName(parentName);
     }
 
     @Override

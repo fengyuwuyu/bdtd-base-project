@@ -18,6 +18,12 @@ package com.stylefeng.guns.core.listener;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.stylefeng.guns.core.cache.DictCacheFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +55,13 @@ public class ConfigListener implements ServletContextListener {
 
         //servletContextPath,默认""
         conf.put("contextPath", sc.getContextPath());
+        
+        ApplicationContext ac = WebApplicationContextUtils.getRequiredWebApplicationContext(evt.getServletContext());
+        if (ac == null) {
+        	throw new RuntimeException("spring容器初始化失败！");
+        }
+        DictCacheFactory dictCacheFactory = ac.getBean(DictCacheFactory.class);
+        dictCacheFactory.init();
     }
 
 }

@@ -21,13 +21,10 @@
                     <div class="hr-line-dashed"></div>
                     @for(item in subDicts){
                         <div class="form-group" name="dictItem" id="dictItem${itemLP.index}">
-                            <label class="col-sm-2 control-label">值</label>
-                            <div class="col-sm-2">
-                                <input class="form-control" type="text" name="itemNum" value="${item.num}">
-                            </div>
+                            <input class="form-control" type="hidden" name="itemNum" value="${item.num}" required="required" value="-1" />
                             <label class="col-sm-2 control-label" style="width: 8%;">名称</label>
                             <div class="col-sm-2">
-                                <input class="form-control" type="text" name="itemName" value="${item.name}">
+                                <input class="form-control" type="text" name="itemName" value="${item.name}" required="required">
                             </div>
                             <div class="col-sm-4">
                                 <#button btnCss="danger" name="删除" id="cancel" icon="fa-remove" clickFun="DictInfoDlg.deleteItem(event)"/>
@@ -47,13 +44,10 @@
 
     <script type="text/template" id="itemTemplate">
         <div class="form-group" name="dictItem" id="dictItem">
-            <label class="col-sm-2 control-label">值</label>
-            <div class="col-sm-2">
-                <input class="form-control" type="text" name="itemNum">
-            </div>
+            <input class="form-control" type="hidden" name="itemNum" required="required" value="-1">
             <label class="col-sm-2 control-label" style="width: 8%;">名称</label>
             <div class="col-sm-2">
-                <input class="form-control" type="text" name="itemName">
+                <input class="form-control" type="text" name="itemName" required="required">
             </div>
             <div class="col-sm-4">
                 <#button btnCss="danger" name="删除" id="cancel" icon="fa-remove" clickFun="DictInfoDlg.deleteItem(event)"/>
