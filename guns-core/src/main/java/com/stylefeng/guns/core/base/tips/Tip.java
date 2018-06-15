@@ -1,29 +1,50 @@
 package com.stylefeng.guns.core.base.tips;
 
+import com.stylefeng.guns.core.module.BdtdError;
+
 /**
  * 返回给前台的提示（最终转化为json形式）
  *
  * @author fengshuonan
  * @Date 2017年1月11日 下午11:58:00
  */
-public abstract class Tip {
+public class Tip {
+	
+	public static final Tip SUCCESS_TIP = new Tip(200, "操作成功！");
+	public static final Tip ERROR_TIP = new Tip(500, "操作失败！");
 
-    protected int code;
-    protected String message;
+	protected long code;
+	protected String message;
 
-    public int getCode() {
-        return code;
-    }
+	public Tip() {
+		super();
+	}
+	
+	public Tip(long code, String message) {
+		super();
+		this.code = code;
+		this.message = message;
+	}
+	
+	public Tip(BdtdError error) {
+		super();
+		this.code = error.getErrorCode();
+		this.message = error.getMessage();
+	}
 
-    public void setCode(int code) {
-        this.code = code;
-    }
+	public long getCode() {
+		return code;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setCode(long code) {
+		this.code = code;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }

@@ -1,7 +1,7 @@
 package com.stylefeng.guns.rest.common.aop;
 
 import com.stylefeng.guns.core.aop.BaseControllerExceptionHandler;
-import com.stylefeng.guns.core.base.tips.ErrorTip;
+import com.stylefeng.guns.core.base.tips.Tip;
 import com.stylefeng.guns.rest.common.exception.BizExceptionEnum;
 import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler extends BaseControllerExceptionHandler {
     @ExceptionHandler(JwtException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorTip jwtException(JwtException e) {
-        return new ErrorTip(BizExceptionEnum.TOKEN_ERROR.getCode(), BizExceptionEnum.TOKEN_ERROR.getMessage());
+    public Tip jwtException(JwtException e) {
+        return new Tip(BizExceptionEnum.TOKEN_ERROR.getCode(), BizExceptionEnum.TOKEN_ERROR.getMessage());
     }
 }

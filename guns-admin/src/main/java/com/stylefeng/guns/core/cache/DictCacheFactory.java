@@ -28,11 +28,11 @@ public class DictCacheFactory {
 	private DictMapper dictMapper;
 	
 	public void init() {
+		dictMap.clear();
 		List<Map<String, Object>> dictList = dictMapper.selectDictMapList();
 		dictList.forEach((item) -> {
 			dictMap.put(item.get(KEY).toString(), item);
 		});
-		log.debug("dictMap = %s", dictMap);
 	}
 	
 	public Map<String, Map<String, Object>> getDictMap() {
@@ -40,13 +40,13 @@ public class DictCacheFactory {
 	}
 	
 	public void wrapper(List<Map<String, Object>> rows, List<DictWrapperEntity> dictwrapperEntities) {
-		rows.forEach((map) -> {
-			dictwrapperEntities.forEach((entity) -> {
-				Object value = getDictMapByParentNameAndNum(entity.getParentName(),
-						(Integer) map.get(entity.getFieldName())).get(DictConsts.DICT_NAME);
+		for (Map<String, Object> map : rows) {
+			for (DictWrapperEntity entity : dictwrapperEntities) {
+				Integer v = (Integer)map.get(entity.getFieldName());
+				Object value = getDictMapByParentNameAndNum(entity.getParentName(), v).get(DictConsts.DICT_NAME);
 				map.put(entity.getReplaceFieldName(), value);
-			});
-		});
+			}
+		}
 	}
 	
 	/**

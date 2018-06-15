@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.cache.DictCacheFactory;
 import com.stylefeng.guns.core.common.annotion.BussinessLog;
 import com.stylefeng.guns.core.common.annotion.Permission;
 import com.stylefeng.guns.core.common.constant.Const;
@@ -40,6 +41,8 @@ public class DictController extends BaseController {
 
     @Autowired
     private IDictService dictService;
+    @Autowired
+    private DictCacheFactory dictCacheFactory;
 
     /**
      * 跳转到字典管理首页
@@ -85,6 +88,7 @@ public class DictController extends BaseController {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }
         this.dictService.addDict(dictName, dictValues);
+        dictCacheFactory.init();
         return SUCCESS_TIP;
     }
 
@@ -121,6 +125,7 @@ public class DictController extends BaseController {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }
         dictService.editDict(dictId, dictName, dictValues);
+        dictCacheFactory.init();
         return SUCCESS_TIP;
     }
 
@@ -137,6 +142,7 @@ public class DictController extends BaseController {
         LogObjectHolder.me().set(ConstantFactory.me().getDictName(dictId));
 
         this.dictService.delteDict(dictId);
+        dictCacheFactory.init();
         return SUCCESS_TIP;
     }
 
