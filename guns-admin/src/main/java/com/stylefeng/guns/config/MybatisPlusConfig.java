@@ -30,7 +30,7 @@ import com.stylefeng.guns.core.mutidatasource.config.MutiDataSourceProperties;
  */
 @Configuration
 @EnableTransactionManagement(order = 2)//由于引入多数据源，所以让spring事务的aop要在多数据源切换aop的后面
-@MapperScan(basePackages = {"com.stylefeng.guns.modular.*.dao", "com.bdtd.card.**.dao"})
+@MapperScan(basePackages = {"com.stylefeng.guns.modular.*.dao", "com.bdtd.card.registration.modular.*.dao"})
 public class MybatisPlusConfig {
 
     @Autowired
