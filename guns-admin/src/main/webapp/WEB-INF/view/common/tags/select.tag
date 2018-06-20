@@ -8,7 +8,12 @@
 <div class="form-group">
     <label class="col-sm-3 control-label">${name}</label>
     <div class="col-sm-9">
-        <select class="form-control" id="${id}" name="${id}"
+        <select class="easyui-combobox form-control" id="${id}" name="${id}" 
+        @if(isNotEmpty(dataOptions)){
+        	data-options="panelHeight:'auto',panelMaxHeight:'300px',${dataOptions}"
+        @}else{
+        	data-options="panelHeight:'auto',panelMaxHeight:'300px'"
+        @}
         @if(isNotEmpty(disabled)){
                     disabled="${disabled}"
                @}

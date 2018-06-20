@@ -151,5 +151,24 @@ var Feng = {
 			percent = 1;
 		}
 		return document.body.clientWidth * percent;
+	},
+	setSelectWidth : function() {
+		var maxWidth = 0;
+		$.each($('input'), function(){
+			var width = parseInt($(this).css('width').replace('px', ''));
+			if (width > maxWidth) {
+				maxWidth = width;
+			}
+		});
+		console.log(maxWidth)
+		$.each($('.combo'), function() {
+			$(this).css('width', '100%');
+		});
+	},
+	checkAddForm: function(){
+		if ($('#addForm').form('validate')) {
+			return true;
+		}
+		return false;
 	}
 };
