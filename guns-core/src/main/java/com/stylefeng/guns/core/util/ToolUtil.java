@@ -15,21 +15,83 @@
  */
 package com.stylefeng.guns.core.util;
 
-import com.stylefeng.guns.core.support.StrKit;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
+import java.util.Set;
+
+import org.beetl.core.Configuration;
+import org.beetl.core.GroupTemplate;
+import org.beetl.core.Template;
+import org.beetl.core.resource.StringTemplateResourceLoader;
+
+import com.baomidou.mybatisplus.generator.config.po.TableField;
+import com.stylefeng.guns.core.support.StrKit;
 
 /**
  * 高频方法集合类
  */
 public class ToolUtil {
+	
+	private static GroupTemplate gt = null;
+	
+	static {
+		StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
+		Configuration cfg;
+		try {
+			cfg = Configuration.defaultConfiguration();
+			gt = new GroupTemplate(resourceLoader, cfg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	Template input = gt.getTemplate("<#input id=\"${propertyName}\" name=\"${comment}\" />");
+	Template inputWithUnderline = gt.getTemplate("<#input id=\"{propertyName}\" name=\"${comment}\" underline=\"true\"/>");
+	
+	/**
+	 * <#input id="produceBatchNum" name="生产批号" underline="true"/>
+	 * <#input id="createDate" name="生产日期" underline="true" type="date" clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+	 * <#select id="unit" name="单位" underline="true" itemList="${unitDictList}"></#select>
+	 * <#input id="createTime" name="下单时间" underline="true" type="datetime" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+	 * 
+	 * TableFieldToString [convert=false, keyFlag=true, keyIdentityFlag=true, name=id, type=int(11), propertyName=id, columnType=INTEGER, comment=主键, fill=null]
+	   TableFieldToString [convert=false, keyFlag=false, keyIdentityFlag=false, name=name, type=varchar(32), propertyName=name, columnType=STRING, comment=用户名, fill=null]
+	   TableFieldToString [convert=false, keyFlag=false, keyIdentityFlag=false, name=passwd, type=varchar(32), propertyName=passwd, columnType=STRING, comment=密码, fill=null]
+	   TableFieldToString [convert=false, keyFlag=false, keyIdentityFlag=false, name=birthday, type=date, propertyName=birthday, columnType=DATE, comment=出生日期, fill=null]
+	   TableFieldToString [convert=true, keyFlag=false, keyIdentityFlag=false, name=create_date, type=datetime, propertyName=createDate, columnType=DATE, comment=创建时间, fill=null]
+	   TableFieldToString [convert=false, keyFlag=false, keyIdentityFlag=false, name=remark, type=varchar(32), propertyName=remark, columnType=STRING, comment=备注, fill=null]
+	 * 
+	 * @param tableField
+	 * @return
+	 * @throws IOException
+	 */
+	public static String tableFieldToFormField(TableField tableField) throws IOException {
+//		TableFieldToString fieldToString = new TableFieldToString(tableField);
+//		System.out.println(fieldToString);
+		Template t = gt.getTemplate("hello,${name}");
+		t.binding("name", "beetl");
+		System.out.println(t.render());
+		t.binding("name", "atest");
+		System.out.println(t.render());
+		return t.render();
+	}
+	
+	public static void main(String[] args) throws IOException {
+		System.out.println(tableFieldToFormField(null));
+	}
 
     /**
      * 获取随机位数的字符串
@@ -64,13 +126,6 @@ public class ToolUtil {
         }
     }
     
-    public static void main(String[] args) {
-		Date date = new Date();
-		System.out.println(dateType(date));
-		java.sql.Date d = new java.sql.Date(System.currentTimeMillis());
-		System.out.println(dateType(d));
-	}
-
     /**
      * 获取异常的具体信息
      *

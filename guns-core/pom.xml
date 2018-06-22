@@ -91,5 +91,9 @@
             <artifactId>ehcache-core</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl</artifactId>
+        </dependency>
     </dependencies>
 </project>
