@@ -165,7 +165,7 @@ var Feng = {
 			$(this).css('width', '100%');
 		});
 	},
-	checkAddForm: function(){
+	validateForm: function(){
 		if ($('#addForm').form('validate')) {
 			return true;
 		}
