@@ -1,17 +1,16 @@
 package com.stylefeng.guns.core.aop;
 
-import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
-import com.stylefeng.guns.core.common.exception.InvalidKaptchaException;
-import com.stylefeng.guns.core.base.tips.Tip;
-import com.stylefeng.guns.core.exception.GunsException;
-import com.stylefeng.guns.core.log.LogManager;
-import com.stylefeng.guns.core.log.factory.LogTaskFactory;
-import com.stylefeng.guns.core.shiro.ShiroKit;
+import static com.stylefeng.guns.core.support.HttpKit.getIp;
+import static com.stylefeng.guns.core.support.HttpKit.getRequest;
+
+import java.lang.reflect.UndeclaredThrowableException;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.CredentialsException;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -20,15 +19,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.lang.reflect.UndeclaredThrowableException;
-
-import static com.stylefeng.guns.core.support.HttpKit.getIp;
-import static com.stylefeng.guns.core.support.HttpKit.getRequest;
+import com.stylefeng.guns.config.properties.BdtdProperties;
+import com.stylefeng.guns.core.base.tips.Tip;
+import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
+import com.stylefeng.guns.core.common.exception.InvalidKaptchaException;
+import com.stylefeng.guns.core.exception.GunsException;
+import com.stylefeng.guns.core.log.LogManager;
+import com.stylefeng.guns.core.log.factory.LogTaskFactory;
+import com.stylefeng.guns.core.shiro.ShiroKit;
 
 /**
  * 全局的的异常拦截器（拦截所有的控制器）（带有@RequestMapping注解的方法上都会拦截）
  *
- * @author fengshuonan
+ * @author 
  * @date 2016年11月12日 下午3:19:56
  */
 @ControllerAdvice
@@ -36,6 +39,8 @@ import static com.stylefeng.guns.core.support.HttpKit.getRequest;
 public class GlobalExceptionHandler {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private BdtdProperties bdtdProperties;
 
     /**
      * 拦截业务异常
@@ -55,8 +60,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String unAuth(AuthenticationException e) {
+    public String unAuth(AuthenticationException e, Model model) {
         log.error("用户未登陆：", e);
+        model.addAttribute("systemName", bdtdProperties.getSystemName());
         return "/login.html";
     }
 
@@ -69,6 +75,7 @@ public class GlobalExceptionHandler {
         String username = getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号被冻结", getIp()));
         model.addAttribute("tips", "账号被冻结");
+        model.addAttribute("systemName", bdtdProperties.getSystemName());
         return "/login.html";
     }
 
@@ -81,6 +88,7 @@ public class GlobalExceptionHandler {
         String username = getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号密码错误", getIp()));
         model.addAttribute("tips", "账号密码错误");
+        model.addAttribute("systemName", bdtdProperties.getSystemName());
         return "/login.html";
     }
 
@@ -93,6 +101,7 @@ public class GlobalExceptionHandler {
         String username = getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "验证码错误", getIp()));
         model.addAttribute("tips", "验证码错误");
+        model.addAttribute("systemName", bdtdProperties.getSystemName());
         return "/login.html";
     }
 

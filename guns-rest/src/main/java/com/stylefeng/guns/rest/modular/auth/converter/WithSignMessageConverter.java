@@ -9,6 +9,7 @@ import com.stylefeng.guns.rest.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.rest.config.properties.JwtProperties;
 import com.stylefeng.guns.rest.modular.auth.security.DataSecurityAction;
 import com.stylefeng.guns.rest.modular.auth.util.JwtTokenUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,7 +21,7 @@ import java.lang.reflect.Type;
 /**
  * 带签名的http信息转化器
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-08-25 15:42
  */
 public class WithSignMessageConverter extends FastJsonHttpMessageConverter {

@@ -2,6 +2,7 @@ package com.stylefeng.guns.rest.modular.auth.util;
 
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.rest.config.properties.JwtProperties;
+
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ import java.util.Map;
  *         7. jti -- jwt唯一标识,防止重复使用
  * </pre>
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017/8/25 10:59
  */
 @Component

@@ -1,45 +1,22 @@
 package com.stylefeng.guns.modular.system.service;
 
-import com.baomidou.mybatisplus.service.IService;
 import com.stylefeng.guns.modular.system.model.Dict;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.service.IService;
+
 /**
- * 字典服务
+ * <p>
+ * 字典表 服务类
+ * </p>
  *
- * @author fengshuonan
- * @date 2017-04-27 17:00
+ * @author lilei123
+ * @since 2018-06-19
  */
 public interface IDictService extends IService<Dict> {
 
-    /**
-     * 添加字典
-     */
-    void addDict(String dictName, String dictValues);
-
-    /**
-     * 编辑字典
-     */
-    void editDict(Integer dictId, String dictName, String dicts);
-
-    /**
-     * 删除字典
-     */
-    void delteDict(Integer dictId);
-
-    /**
-     * 根据上级名称获取词典列表
-     */
-    List<Dict> selectByParentName(@Param("name") String name);
-
-    /**
-     * 查询字典列表
-     */
-    List<Map<String, Object>> list(@Param("condition") String conditiion);
-    
-    
+	List<Map<String, Object>> selectListObtainParentName(Integer pid, String condition);
 
 }

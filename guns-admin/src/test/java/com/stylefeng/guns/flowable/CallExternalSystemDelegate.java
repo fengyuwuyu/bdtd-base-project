@@ -4,7 +4,7 @@ import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 
 /**
- * @author fengshuonan
+ * @author 
  * @date 2017-12-02 20:57
  */
 public class CallExternalSystemDelegate implements JavaDelegate {

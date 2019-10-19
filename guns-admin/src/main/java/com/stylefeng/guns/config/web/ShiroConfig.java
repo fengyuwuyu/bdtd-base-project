@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * shiro权限管理的配置
  *
- * @author fengshuonan
+ * @author 
  * @date 2016年11月14日 下午3:03:44
  */
 @Configuration
@@ -158,6 +158,9 @@ public class ShiroConfig {
          *
          */
         Map<String, String> hashMap = new LinkedHashMap<>();
+        hashMap.put("/treatment/**", "anon");
+        hashMap.put("/personal/**", "anon");
+        hashMap.put("/test/**", "anon");
         hashMap.put("/static/**", "anon");
         hashMap.put("/login", "anon");
         hashMap.put("/global/sessionError", "anon");

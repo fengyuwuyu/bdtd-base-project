@@ -1,14 +1,52 @@
 @layout("/common/_container.html"){
-<div class="container-fluid" style="padding: 0 !important;">
-	<div class="row">
-		<div class="col-sm-12">
-			@for(notice in noticeList){
-				<div class="alert alert-success alert-dismissable">
-					<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-					${notice.content}
-				</div>
-			@}
-		</div>
-	</div>
+<style>
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-top {
+  width: 100%;
+  flex: 3;
+}
+
+.chart-bottom {
+  width: 100%;
+  flex: 5;
+  display: flex;
+}
+
+.chart {
+  width: 50%;
+  height: 100%;
+}
+
+</style>
+
+<div class="chart-container">
+  <div class="chart-top">
+    <div id="pie" style="height: 100%; width:100%" ></div>
+  </div>
+    <HR align=left width=100% color=#987cb9 SIZE=1 style="position: relative; chart-top: 0;">
+  <div class="chart-bottom">
+    <div class="chart" id="monthlyChart">
+    </div>
+    <div class="chart" id="currChart">
+    </div>
+  </div>
 </div>
+<script>
+  $(function() {
+	$('.chart-container').css('height', document.body.clientHeight) 
+	$('.chart-container').css('width', document.body.clientWidth) 
+	console.log(document.body.clientHeight)
+	console.log(document.body.clientWidth)
+	  
+  })
+</script>
+<script src="${ctxPath}/static/js/echarts.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/modular/main/blackBoard.js"></script>
 @}

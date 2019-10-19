@@ -4,6 +4,7 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.stylefeng.guns.config.properties.GunsProperties;
 import com.stylefeng.guns.core.util.FileUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ import java.io.IOException;
 /**
  * 验证码生成
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-05-05 23:10
  */
 @Controller
@@ -97,7 +98,7 @@ public class KaptchaController {
      * @Date 2017/5/24 23:00
      */
     @RequestMapping("/{pictureId}")
-    public void renderPicture(@PathVariable("pictureId") String pictureId, HttpServletResponse response) {
+    public void renderPicture(@PathVariable("pictureId") String pictureId, HttpServletRequest request, HttpServletResponse response) {
         String path = gunsProperties.getFileUploadPath() + pictureId + ".jpg";
         try {
             byte[] bytes = FileUtil.toByteArray(path);
@@ -105,7 +106,7 @@ public class KaptchaController {
         }catch (Exception e){
             //如果找不到图片就返回一个默认图片
             try {
-                response.sendRedirect("/static/img/girl.gif");
+                response.sendRedirect(request.getContextPath() + "/static/img/girl.gif");
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

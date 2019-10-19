@@ -3,7 +3,7 @@ package com.stylefeng.guns.core.common.constant.state;
 /**
  * 业务是否成功的日志记录
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017年1月22日 下午12:14:59
  */
 public enum LogSucceed {

@@ -1,13 +1,16 @@
 package com.stylefeng.guns.generator.engine;
 
 
+import java.util.List;
+
+import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.generator.engine.base.GunsTemplateEngine;
 
 /**
  * 通用的模板生成引擎
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-05-09 20:32
  */
 public class SimpleTemplateEngine extends GunsTemplateEngine {
@@ -66,5 +69,24 @@ public class SimpleTemplateEngine extends GunsTemplateEngine {
                 ToolUtil.firstLetterToUpper(super.getContextConfig().getBizEnName()));
         generateFile(super.getContextConfig().getTemplatePrefixPath() + "/menu_sql.sql.btl", path);
         System.out.println("生成sql成功!");
+        
+        System.out.println();
+        
+        List<TableField> fields = super.getTableInfo().getFields();
+        StringBuilder comments = new StringBuilder("{");
+        StringBuilder fieldNames = new StringBuilder("{");
+        for (int i = 0, len = fields.size(); i < len; i++) {
+            TableField tableField = fields.get(i);
+            comments.append("\"" + tableField.getComment() + "\"");
+            fieldNames.append("\"" + tableField.getPropertyName() + "\"");
+            if (i != len -1) {
+                comments.append(", ");
+                fieldNames.append(", ");
+            }
+        }
+        comments.append("}");
+        fieldNames.append("}");
+        System.out.println(comments.toString());
+        System.out.println(fieldNames.toString());
     }
 }

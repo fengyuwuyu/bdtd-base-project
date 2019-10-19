@@ -1,28 +1,44 @@
 package com.stylefeng.guns.core.wrapper;
 
+import com.stylefeng.guns.core.common.annotion.DictEntity;
+import com.stylefeng.guns.core.util.StringUtil;
+
 public class DictWrapperEntity {
 
-	private String parentName;
+	private Integer parentId;
 	private String fieldName;
 	private String replaceFieldName;
 
 	public DictWrapperEntity() {
 		super();
 	}
-
-	public DictWrapperEntity(String parentName, String fieldName, String replaceFieldName) {
+	public DictWrapperEntity(DictEntity dictEntity) {
 		super();
-		this.parentName = parentName;
+		this.parentId = dictEntity.parentId();
+		this.fieldName = dictEntity.fieldName();
+		this.replaceFieldName = StringUtil.isNullEmpty(dictEntity.replaceFieldName()) ? dictEntity.fieldName() : dictEntity.replaceFieldName();
+	}
+	
+	public DictWrapperEntity(Integer parentId, String fieldName) {
+        this.parentId = parentId;
+        this.fieldName = fieldName;
+        this.replaceFieldName = fieldName;
+    }
+    public DictWrapperEntity(Integer parentId, String fieldName, String replaceFieldName) {
+		super();
+		this.parentId = parentId;
 		this.fieldName = fieldName;
 		this.replaceFieldName = replaceFieldName;
 	}
+	
+	
 
-	public String getParentName() {
-		return parentName;
+	public Integer getParentId() {
+		return parentId;
 	}
 
-	public void setParentName(String parentName) {
-		this.parentName = parentName;
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 
 	public String getFieldName() {
@@ -43,7 +59,7 @@ public class DictWrapperEntity {
 
 	@Override
 	public String toString() {
-		return "DictWrapperEntity [parentName=" + parentName + ", fieldName=" + fieldName + ", replaceFieldName="
+		return "DictWrapperEntity [parentId=" + parentId + ", fieldName=" + fieldName + ", replaceFieldName="
 				+ replaceFieldName + "]";
 	}
 

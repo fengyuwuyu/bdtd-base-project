@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.system.controller;
 
+import com.stylefeng.guns.core.EnumRoleType;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.base.tips.Tip;
 import com.stylefeng.guns.core.cache.CacheKit;
@@ -14,12 +15,14 @@ import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import com.stylefeng.guns.core.node.ZTreeNode;
 import com.stylefeng.guns.core.util.Convert;
+import com.stylefeng.guns.core.util.StringUtil;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.model.Role;
 import com.stylefeng.guns.modular.system.model.User;
 import com.stylefeng.guns.modular.system.service.IRoleService;
 import com.stylefeng.guns.modular.system.service.IUserService;
 import com.stylefeng.guns.modular.system.warpper.RoleWarpper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +39,7 @@ import java.util.Map;
 /**
  * 角色控制器
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017年2月12日21:59:14
  */
 @Controller
@@ -63,7 +66,8 @@ public class RoleController extends BaseController {
      * 跳转到添加角色
      */
     @RequestMapping(value = "/role_add")
-    public String roleAdd() {
+    public String roleAdd(Model model) {
+        model.addAttribute("roleTypeItemList", EnumRoleType.select());
         return PREFIX + "/role_add.html";
     }
 
@@ -79,7 +83,7 @@ public class RoleController extends BaseController {
         Role role = this.roleService.selectById(roleId);
         model.addAttribute(role);
         model.addAttribute("pName", ConstantFactory.me().getSingleRoleName(role.getPid()));
-        model.addAttribute("deptName", ConstantFactory.me().getDeptName(role.getDeptid()));
+        model.addAttribute("roleTypeItemList", EnumRoleType.select());
         LogObjectHolder.me().set(role);
         return PREFIX + "/role_edit.html";
     }
@@ -114,11 +118,15 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/add")
     @BussinessLog(value = "添加角色", key = "name", dict = RoleDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @ResponseBody
     public Tip add(@Valid Role role, BindingResult result) {
         if (result.hasErrors()) {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+        }
+        
+        if (StringUtil.isNullEmpty(role.getTips())) {
+            role.setTips(role.getName());
         }
         role.setId(null);
         this.roleService.insert(role);
@@ -130,12 +138,17 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/edit")
     @BussinessLog(value = "修改角色", key = "name", dict = RoleDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @ResponseBody
     public Tip edit(@Valid Role role, BindingResult result) {
         if (result.hasErrors()) {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }
+        
+        if (StringUtil.isNullEmpty(role.getTips())) {
+            role.setTips(role.getName());
+        }
+        
         this.roleService.updateById(role);
 
         //删除缓存
@@ -148,7 +161,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/remove")
     @BussinessLog(value = "删除角色", key = "roleId", dict = RoleDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @ResponseBody
     public Tip remove(@RequestParam Integer roleId) {
         if (ToolUtil.isEmpty(roleId)) {
@@ -188,7 +201,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping("/setAuthority")
     @BussinessLog(value = "配置权限", key = "roleId,ids", dict = RoleDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @ResponseBody
     public Tip setAuthority(@RequestParam("roleId") Integer roleId, @RequestParam("ids") String ids) {
         if (ToolUtil.isOneEmpty(roleId)) {

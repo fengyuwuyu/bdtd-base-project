@@ -77,7 +77,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
         value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
 
-        value = value.replaceAll("script", "");
+//        value = value.replaceAll("script", "");
 
         return value;
 

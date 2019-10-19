@@ -9,6 +9,7 @@ import com.stylefeng.guns.core.shiro.ShiroKit;
 import com.stylefeng.guns.core.shiro.ShiroUser;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.Contrast;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -25,7 +26,7 @@ import java.util.Map;
 /**
  * 日志记录
  *
- * @author fengshuonan
+ * @author 
  * @date 2016年12月6日 下午8:48:30
  */
 @Aspect

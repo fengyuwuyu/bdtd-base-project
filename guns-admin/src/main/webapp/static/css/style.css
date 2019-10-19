@@ -397,7 +397,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 
 .fixed-nav #wrapper {
-    padding-top: 60px;
+    padding-top: 0;
     box-sizing: border-box;
 }
 
@@ -619,7 +619,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 
 .top-navigation.fixed-nav #wrapper,
 .fixed-nav #wrapper.top-navigation {
-    margin-top: 50px;
+    margin-top: 0;
 }
 
 .top-navigation .footer.fixed {
@@ -685,7 +685,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 }
 
 .float-e-margins .btn {
-    margin-bottom: 5px;
+    margin-bottom: 0;
 }
 
 .btn-w-m {
@@ -3721,7 +3721,7 @@ nav.page-tabs .page-tabs-content {
 }
 
 #content-main {
-    height: calc(100% - 140px);
+    height: calc(100% - 80px);
     overflow: hidden;
 }
 
@@ -4139,7 +4139,7 @@ table.table-mail tr td {
 /* BACKGROUNDS */
 
 .gray-bg {
-    background-color: #f3f3f4;
+    background-color: #ffffff;
 }
 
 .white-bg {
@@ -4788,15 +4788,15 @@ body.modal-open {
 /* ERROR & LOGIN & LOCKSCREEN*/
 
 .middle-box {
-    max-width: 400px;
+    max-width: 500px;
     z-index: 100;
     margin: 0 auto;
-    padding-top: 40px;
+    padding-top: 10px;
 }
 
 .lockscreen.middle-box {
     width: 200px;
-    padding-top: 110px;
+    padding-top: 20px;
 }
 
 .loginscreen.middle-box {
@@ -4816,11 +4816,20 @@ body.modal-open {
 }
 
 .logo-name {
-    color: #e6e6e6;
-    font-size: 180px;
+    font-size: 80px;
     font-weight: 800;
     letter-spacing: -10px;
-    margin-bottom: 0px;
+    margin: 0 auto;
+    margin-top: 240px;
+    text-align: center;
+    color: rgb(38, 95, 145);
+    text-shadow: 2px 2px rgba(38, 95, 145, 0.5);
+    letter-spacing: 3px;
+}
+
+.login-btn {
+	background-color: rgb(38, 95, 145);
+	color: #ffffff;
 }
 
 .middle-box h1 {
@@ -4828,7 +4837,7 @@ body.modal-open {
 }
 
 .wrapper .middle-box {
-    margin-top: 140px;
+    margin-top: 40px;
 }
 
 .lock-word {

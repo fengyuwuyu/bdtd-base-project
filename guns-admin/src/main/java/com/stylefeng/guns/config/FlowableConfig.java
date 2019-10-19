@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.stylefeng.guns.config.properties.GunsFlowableProperties;
 import com.stylefeng.guns.core.datasource.DruidProperties;
 import com.stylefeng.guns.core.flowable.GunsDefaultProcessDiagramGenerator;
+
 import org.flowable.spring.SpringAsyncExecutor;
 import org.flowable.spring.SpringProcessEngineConfiguration;
 import org.flowable.spring.boot.AbstractProcessEngineAutoConfiguration;
@@ -17,7 +18,7 @@ import java.io.IOException;
 /**
  * 工作流配置
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-12-02 22:28
  */
 @Configuration

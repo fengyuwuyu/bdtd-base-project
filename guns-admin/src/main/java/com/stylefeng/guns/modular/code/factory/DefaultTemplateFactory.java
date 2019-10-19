@@ -13,7 +13,7 @@ import com.stylefeng.guns.generator.action.model.GenQo;
 /**
  * 模板种类构建器
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-12-04-下午2:59
  */
 public class DefaultTemplateFactory {
@@ -45,8 +45,8 @@ public class DefaultTemplateFactory {
         genQo.setAuthor("lilei");
         genQo.setProjectPackage("com.bdtd.card.registration");
         genQo.setCorePackage(CoreFlag.class.getPackage().getName());
-        genQo.setIgnoreTabelPrefix("sys_");
-        genQo.setModuleName("system");
+        genQo.setIgnoreTabelPrefix("bdtd_");
+        genQo.setModuleName("treatment");
         genQo.setParentMenuName("系统管理");
         return genQo;
     }

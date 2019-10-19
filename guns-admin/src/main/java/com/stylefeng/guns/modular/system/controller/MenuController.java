@@ -12,12 +12,14 @@ import com.stylefeng.guns.core.common.constant.state.MenuStatus;
 import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.core.log.LogObjectHolder;
+import com.stylefeng.guns.core.model.EnumOriginMask;
 import com.stylefeng.guns.core.node.ZTreeNode;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.model.Menu;
 import com.stylefeng.guns.modular.system.service.IMenuService;
 import com.stylefeng.guns.modular.system.warpper.MenuWarpper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +36,7 @@ import java.util.Map;
 /**
  * 菜单控制器
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017年2月12日21:59:14
  */
 @Controller
@@ -50,7 +52,7 @@ public class MenuController extends BaseController {
      * 跳转到菜单列表列表页面
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
         return PREFIX + "menu.html";
     }
 
@@ -58,7 +60,8 @@ public class MenuController extends BaseController {
      * 跳转到菜单列表列表页面
      */
     @RequestMapping(value = "/menu_add")
-    public String menuAdd() {
+    public String menuAdd(Model model) {
+        model.addAttribute("menuItemList", EnumOriginMask.select());
         return PREFIX + "menu_add.html";
     }
 
@@ -90,6 +93,7 @@ public class MenuController extends BaseController {
         menuMap.put("pcodeName", ConstantFactory.me().getMenuNameByCode(temp.getCode()));
         model.addAttribute("menu", menuMap);
         LogObjectHolder.me().set(menu);
+        model.addAttribute("menuItemList", EnumOriginMask.select());
         return PREFIX + "menu_edit.html";
     }
 

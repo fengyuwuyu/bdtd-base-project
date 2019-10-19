@@ -1,9 +1,9 @@
 package com.stylefeng.guns.modular.system.warpper;
 
-import com.stylefeng.guns.core.common.constant.factory.ConstantFactory;
-import com.stylefeng.guns.modular.system.model.Dict;
 import com.stylefeng.guns.core.base.warpper.BaseControllerWarpper;
+import com.stylefeng.guns.core.common.constant.factory.ConstantFactory;
 import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.model.Dict;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 字典列表的包装
  *
- * @author fengshuonan
+ * @author 
  * @date 2017年4月25日 18:10:31
  */
 public class DictWarpper extends BaseControllerWarpper {
@@ -27,7 +27,7 @@ public class DictWarpper extends BaseControllerWarpper {
         List<Dict> dicts = ConstantFactory.me().findInDict(id);
         if(dicts != null){
             for (Dict dict : dicts) {
-                detail.append(dict.getNum() + ":" +dict.getName() + ",");
+                detail.append(dict.getId() + ":" +dict.getName() + ",");
             }
             map.put("detail", ToolUtil.removeSuffix(detail.toString(),","));
         }

@@ -3,10 +3,10 @@ package com.stylefeng.guns.config.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-
 import static com.stylefeng.guns.core.util.ToolUtil.getTempPath;
 import static com.stylefeng.guns.core.util.ToolUtil.isEmpty;
+
+import java.io.File;
 
 /**
  * guns项目配置

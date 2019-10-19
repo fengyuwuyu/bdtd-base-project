@@ -1,8 +1,9 @@
 package com.stylefeng.guns.modular.system.controller;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,40 +13,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.stylefeng.guns.core.base.controller.BaseController;
-import com.stylefeng.guns.core.cache.DictCacheFactory;
-import com.stylefeng.guns.core.common.annotion.BussinessLog;
-import com.stylefeng.guns.core.common.annotion.Permission;
-import com.stylefeng.guns.core.common.constant.Const;
-import com.stylefeng.guns.core.common.constant.dictmap.DictMap;
-import com.stylefeng.guns.core.common.constant.factory.ConstantFactory;
-import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
-import com.stylefeng.guns.core.exception.GunsException;
+import com.stylefeng.guns.core.base.tips.Tip;
 import com.stylefeng.guns.core.log.LogObjectHolder;
-import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.core.module.BdtdError;
+import com.stylefeng.guns.core.util.DictCacheFactory;
 import com.stylefeng.guns.modular.system.model.Dict;
 import com.stylefeng.guns.modular.system.service.IDictService;
-import com.stylefeng.guns.modular.system.warpper.DictWarpper;
 
 /**
- * 字典控制器
+ * 控制器
  *
- * @author fengshuonan
- * @Date 2017年4月26日 12:55:31
+ * @author 
+ * @Date 2018-06-19 16:40:39
  */
 @Controller
 @RequestMapping("/dict")
 public class DictController extends BaseController {
+    
+    private Logger log = LoggerFactory.getLogger(getClass());
 
     private String PREFIX = "/system/dict/";
 
     @Autowired
     private IDictService dictService;
+    
     @Autowired
     private DictCacheFactory dictCacheFactory;
 
     /**
-     * 跳转到字典管理首页
+     * 跳转到首页
      */
     @RequestMapping("")
     public String index() {
@@ -53,97 +52,108 @@ public class DictController extends BaseController {
     }
 
     /**
-     * 跳转到添加字典
+     * 跳转到添加
      */
-    @RequestMapping("/dict_add")
-    public String deptAdd() {
+    @RequestMapping("/dict_add/{pid}")
+    public String dictAdd(@PathVariable Integer pid, Model model) {
+    	model.addAttribute("pid", pid);
         return PREFIX + "dict_add.html";
     }
 
     /**
-     * 跳转到修改字典
+     * 跳转到添加
      */
-    @Permission(Const.ADMIN_NAME)
-    @RequestMapping("/dict_edit/{dictId}")
-    public String deptUpdate(@PathVariable Integer dictId, Model model) {
+    @RequestMapping("/dict_sublist/{pid}")
+    public String dictSubList(@PathVariable Integer pid, Model model) {
+    	model.addAttribute("pid", pid);
+        return PREFIX + "subDict.html";
+    }
+
+    /**
+     * 跳转到修改
+     */
+    @RequestMapping("/dict_update/{dictId}")
+    public String dictUpdate(@PathVariable Integer dictId, Model model) {
         Dict dict = dictService.selectById(dictId);
-        model.addAttribute("dict", dict);
-        List<Dict> subDicts = dictService.selectList(new EntityWrapper<Dict>().eq("pid", dictId));
-        model.addAttribute("subDicts", subDicts);
+        model.addAttribute("item",dict);
         LogObjectHolder.me().set(dict);
         return PREFIX + "dict_edit.html";
     }
 
     /**
-     * 新增字典
-     *
-     * @param dictValues 格式例如   "1:启用;2:禁用;3:冻结"
+     * 获取列表
      */
-    @BussinessLog(value = "添加字典记录", key = "dictName,dictValues", dict = DictMap.class)
-    @RequestMapping(value = "/add")
-    @Permission(Const.ADMIN_NAME)
+    @RequestMapping(value = "/list/{pid}")
     @ResponseBody
-    public Object add(String dictName, String dictValues) {
-        if (ToolUtil.isOneEmpty(dictName, dictValues)) {
-            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
-        }
-        this.dictService.addDict(dictName, dictValues);
+    public Object list(@PathVariable Integer pid, String condition, Integer offset, Integer limit) {
+    	Wrapper<Dict> wrapper = new EntityWrapper<>();
+    	wrapper.like("name", condition);
+    	if (pid != null) {
+    		wrapper.and().eq("pid", pid);
+    	}
+    	return dictService.selectListObtainParentName(pid, condition);
+    }
+
+    /**
+     * 新增
+     */
+    @RequestMapping(value = "/add")
+    @ResponseBody
+    public Object add(Dict dict) {
+    	Date createDate = new Date();
+		dict.setCreateDate(createDate);
+		dict.setUpdateDate(createDate);
+        dictService.insert(dict);
+        
         dictCacheFactory.init();
         return SUCCESS_TIP;
     }
 
     /**
-     * 获取所有字典列表
+     * 删除
      */
-    @RequestMapping(value = "/list")
-    @Permission(Const.ADMIN_NAME)
+    @RequestMapping(value = "/delete")
     @ResponseBody
-    public Object list(String condition) {
-        List<Map<String, Object>> list = this.dictService.list(condition);
-        return super.warpObject(new DictWarpper(list));
+    public Object delete(@RequestParam Integer dictId) {
+    	Wrapper<Dict> wrapper = new EntityWrapper<>();
+    	wrapper.eq("pid", dictId);
+		int count = dictService.selectCount(wrapper );
+		if (count > 0) {
+			return new Tip(500, BdtdError.DELETE_DICT_CASCADE_ERROR.getMessage());
+		}
+        try {
+            dictService.deleteById(dictId);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            if (e instanceof MySQLIntegrityConstraintViolationException) {
+                return new Tip(500, "该字典正在使用中，无法删除！");
+            }
+            return new Tip(500, "删除失败，服务器内部错误！");
+        }
+        
+        dictCacheFactory.init();
+        return SUCCESS_TIP;
     }
 
     /**
-     * 字典详情
+     * 修改
+     */
+    @RequestMapping(value = "/update")
+    @ResponseBody
+    public Object update(Dict dict) {
+    	dict.setUpdateDate(new Date());
+        dictService.updateById(dict);
+        
+        dictCacheFactory.init();
+        return SUCCESS_TIP;
+    }
+
+    /**
+     * 详情
      */
     @RequestMapping(value = "/detail/{dictId}")
-    @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object detail(@PathVariable("dictId") Integer dictId) {
         return dictService.selectById(dictId);
     }
-    
-    /**
-     * 修改字典
-     */
-    @BussinessLog(value = "修改字典", key = "dictName,dictValues", dict = DictMap.class)
-    @RequestMapping(value = "/update")
-    @Permission(Const.ADMIN_NAME)
-    @ResponseBody
-    public Object update(Integer dictId, String dictName, String dictValues) {
-        if (ToolUtil.isOneEmpty(dictId, dictName, dictValues)) {
-            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
-        }
-        dictService.editDict(dictId, dictName, dictValues);
-        dictCacheFactory.init();
-        return SUCCESS_TIP;
-    }
-
-    /**
-     * 删除字典记录
-     */
-    @BussinessLog(value = "删除字典记录", key = "dictId", dict = DictMap.class)
-    @RequestMapping(value = "/delete")
-    @Permission(Const.ADMIN_NAME)
-    @ResponseBody
-    public Object delete(@RequestParam Integer dictId) {
-
-        //缓存被删除的名称
-        LogObjectHolder.me().set(ConstantFactory.me().getDictName(dictId));
-
-        this.dictService.delteDict(dictId);
-        dictCacheFactory.init();
-        return SUCCESS_TIP;
-    }
-
 }

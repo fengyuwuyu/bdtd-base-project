@@ -2,6 +2,7 @@ package com.stylefeng.guns.core.beetl;
 
 import com.stylefeng.guns.core.util.KaptchaUtil;
 import com.stylefeng.guns.core.util.ToolUtil;
+
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 
 /**

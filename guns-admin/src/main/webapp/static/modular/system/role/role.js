@@ -17,7 +17,14 @@ Role.initColumn = function () {
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '名称', field: 'name', align: 'center', valign: 'middle', sortable: true},
         {title: '上级角色', field: 'pName', align: 'center', valign: 'middle', sortable: true},
-        {title: '所在部门', field: 'deptName', align: 'center', valign: 'middle', sortable: true},
+        {title: '类型', field: 'type', align: 'center', valign: 'middle', sortable: true, formatter: function(value, item) {
+        	if (value == 2) {
+        		return "部门管理员";
+        	} else if (value == 3) {
+        		return "超级管理员";
+        	}
+        	return "普通角色";
+        }},
         {title: '别名', field: 'tips', align: 'center', valign: 'middle', sortable: true}]
     return columns;
 };

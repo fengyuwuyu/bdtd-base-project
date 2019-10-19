@@ -5,6 +5,7 @@ import com.stylefeng.guns.core.util.RenderUtil;
 import com.stylefeng.guns.rest.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.rest.config.properties.JwtProperties;
 import com.stylefeng.guns.rest.modular.auth.util.JwtTokenUtil;
+
 import io.jsonwebtoken.JwtException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,7 +21,7 @@ import java.io.IOException;
 /**
  * 对客户端请求的jwt token验证过滤器
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017/8/24 14:04
  */
 public class AuthFilter extends OncePerRequestFilter {

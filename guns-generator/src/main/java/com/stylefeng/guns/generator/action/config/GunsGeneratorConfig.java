@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 /**
  * 默认的代码生成的配置
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-10-28-下午8:27
  */
 public class GunsGeneratorConfig extends AbstractGeneratorConfig {
@@ -30,7 +30,7 @@ public class GunsGeneratorConfig extends AbstractGeneratorConfig {
     }
 
     protected void strategyConfig() {
-        strategyConfig.setTablePrefix(new String[]{"sys_"});// 此处可以修改为您的表前缀
+        strategyConfig.setTablePrefix(new String[]{"bdtd_"});// 此处可以修改为您的表前缀
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);
     }
 
@@ -46,7 +46,7 @@ public class GunsGeneratorConfig extends AbstractGeneratorConfig {
         contextConfig.setCoreBasePackage("com.stylefeng.guns.core");
         contextConfig.setBizChName("字典管理");
         contextConfig.setBizEnName("sysDict");
-        contextConfig.setModuleName("system");
+        contextConfig.setModuleName("treatment");
         contextConfig.setProjectPath("D:\\ideaSpace\\guns\\guns-admin");//写自己项目的绝对路径
         contextConfig.setEntityName("SysDict");
         sqlConfig.setParentMenuName(null);//这里写已有菜单的名称,当做父节点

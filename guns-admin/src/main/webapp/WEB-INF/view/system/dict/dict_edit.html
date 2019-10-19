@@ -1,59 +1,29 @@
 @layout("/common/_container.html"){
 <div class="ibox float-e-margins">
     <div class="ibox-content">
-        <div class="form-horizontal">
+        <form id="editForm" class="form-horizontal">
 
-            <input type="hidden" id="id" value="">
+            <input type="hidden" id="id" value="${item.id}">
+            <input type="hidden" id="pid" value="${item.pid}">
 
             <div class="row">
-                <div class="col-sm-12" id="itemsArea">
-                    <input type="hidden" id="itemSize" value="${subDicts.~size!0}" />
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">字典名称</label>
-                        <div class="col-sm-2">
-                            <input class="form-control" id="dictName" type="text" value="${dict.name}">
-                            <input type="hidden" id="dictId" value="${dict.id}">
-                        </div>
-                        <div class="col-sm-2">
-                            <#button btnCss="info" name="增加" icon="fa-plus" clickFun="DictInfoDlg.addItem()"/>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    @for(item in subDicts){
-                        <div class="form-group" name="dictItem" id="dictItem${itemLP.index}">
-                            <input class="form-control" type="hidden" name="itemNum" value="${item.num}" required="required" value="-1" />
-                            <label class="col-sm-2 control-label" style="width: 8%;">名称</label>
-                            <div class="col-sm-2">
-                                <input class="form-control" type="text" name="itemName" value="${item.name}" required="required">
-                            </div>
-                            <div class="col-sm-4">
-                                <#button btnCss="danger" name="删除" id="cancel" icon="fa-remove" clickFun="DictInfoDlg.deleteItem(event)"/>
-                            </div>
-                        </div>
-                    @}
-                </input>
+                <div class="col-sm-12 b-r">
+                            <#input id="name" name="中文类别" value="${item.name}" underline="true" dataOptions="required:true" />
+                            <#input id="enName" name="英文类别" value="${item.enName}" underline="true" />
+                            <#input id="name" name="内容" value="${item.content}" />
+                </div>
+
             </div>
+
             <div class="row btn-group-m-t">
                 <div class="col-sm-10">
                     <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="DictInfoDlg.editSubmit()"/>
                     <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="DictInfoDlg.close()"/>
                 </div>
             </div>
-        </div>
+        </form>
+
     </div>
-
-    <script type="text/template" id="itemTemplate">
-        <div class="form-group" name="dictItem" id="dictItem">
-            <input class="form-control" type="hidden" name="itemNum" required="required" value="-1">
-            <label class="col-sm-2 control-label" style="width: 8%;">名称</label>
-            <div class="col-sm-2">
-                <input class="form-control" type="text" name="itemName" required="required">
-            </div>
-            <div class="col-sm-4">
-                <#button btnCss="danger" name="删除" id="cancel" icon="fa-remove" clickFun="DictInfoDlg.deleteItem(event)"/>
-            </div>
-        </div>
-    </script>
-
-    <script src="${ctxPath}/static/modular/system/dict/dict_info.js"></script>
+</div>
+<script src="${ctxPath}/static/modular/system/dict/dict_info.js"></script>
 @}

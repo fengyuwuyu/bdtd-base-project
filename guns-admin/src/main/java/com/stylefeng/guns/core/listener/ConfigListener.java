@@ -22,7 +22,7 @@ import javax.servlet.ServletContextListener;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.stylefeng.guns.core.cache.DictCacheFactory;
+import com.stylefeng.guns.core.util.DictCacheFactory;
 
 import java.util.HashMap;
 import java.util.Map;

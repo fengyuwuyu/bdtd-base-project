@@ -13,17 +13,19 @@ import com.stylefeng.guns.core.support.StrKit;
 import com.stylefeng.guns.core.util.Convert;
 import com.stylefeng.guns.core.util.SpringContextHolder;
 import com.stylefeng.guns.core.util.ToolUtil;
+
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * 常量的生产工厂
  *
- * @author fengshuonan
+ * @author 
  * @date 2017年2月13日 下午10:55:21
  */
 @Component
@@ -142,12 +144,11 @@ public class ConstantFactory implements IConstantFactory {
     public String getMenuNames(String menuIds) {
         Integer[] menus = Convert.toIntArray(menuIds);
         StringBuilder sb = new StringBuilder();
-        for (int menu : menus) {
-            Menu menuObj = menuMapper.selectById(menu);
-            if (ToolUtil.isNotEmpty(menuObj) && ToolUtil.isNotEmpty(menuObj.getName())) {
+        menuMapper.selectBatchIds(Arrays.asList(menus)).forEach((menuObj) -> {
+            if (ToolUtil.isNotEmpty(menuObj.getName())) {
                 sb.append(menuObj.getName()).append(",");
             }
-        }
+        });
         return StrKit.removeSuffix(sb.toString(), ",");
     }
 
@@ -236,7 +237,7 @@ public class ConstantFactory implements IConstantFactory {
             wrapper = wrapper.eq("pid", dict.getId());
             List<Dict> dicts = dictMapper.selectList(wrapper);
             for (Dict item : dicts) {
-                if (item.getNum() != null && item.getNum().equals(val)) {
+                if (item.getId() == val) {
                     return item.getName();
                 }
             }

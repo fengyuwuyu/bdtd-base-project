@@ -1,19 +1,21 @@
 package com.stylefeng.guns.modular.system.model;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-
-import java.io.Serializable;
 
 /**
  * <p>
  * 字典表
  * </p>
  *
- * @author stylefeng
- * @since 2017-07-11
+ * @author lilei123
+ * @since 2018-06-19
  */
 @TableName("sys_dict")
 public class Dict extends Model<Dict> {
@@ -21,38 +23,40 @@ public class Dict extends Model<Dict> {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 主键id
+	 * id
 	 */
 	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
 	/**
-	 * 排序
-	 */
-	private Integer num;
-	/**
-	 * 父级字典
+	 * 父id
 	 */
 	private Integer pid;
 	/**
-	 * 名称
+	 * 中文类别
 	 */
 	private String name;
 	/**
-	 * 提示
+	 * 英文类别
 	 */
-	private String tips;
+	@TableField("en_name")
+	private String enName;
+	private String content;
+	@TableField("create_date")
+	private Date createDate;
+	@TableField("update_date")
+	private Date updateDate;
 
 	public Dict() {
 		super();
 	}
 
-	public Dict(Integer id, Integer num, Integer pid, String name, String tips) {
+	public Dict(Integer id, Integer pid, String name, String enName, String content) {
 		super();
 		this.id = id;
-		this.num = num;
 		this.pid = pid;
 		this.name = name;
-		this.tips = tips;
+		this.enName = enName;
+		this.content = content;
 	}
 
 	public Integer getId() {
@@ -61,14 +65,6 @@ public class Dict extends Model<Dict> {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getNum() {
-		return num;
-	}
-
-	public void setNum(Integer num) {
-		this.num = num;
 	}
 
 	public Integer getPid() {
@@ -87,12 +83,36 @@ public class Dict extends Model<Dict> {
 		this.name = name;
 	}
 
-	public String getTips() {
-		return tips;
+	public String getEnName() {
+		return enName;
 	}
 
-	public void setTips(String tips) {
-		this.tips = tips;
+	public void setEnName(String enName) {
+		this.enName = enName;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	@Override
@@ -102,6 +122,7 @@ public class Dict extends Model<Dict> {
 
 	@Override
 	public String toString() {
-		return "Dict{" + "id=" + id + ", num=" + num + ", pid=" + pid + ", name=" + name + ", tips=" + tips + "}";
+		return "Dict [id=" + id + ", pid=" + pid + ", name=" + name + ", enName=" + enName + ", content=" + content
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
 }

@@ -1,8 +1,5 @@
 package com.stylefeng.guns.core.aop;
 
-import com.stylefeng.guns.core.base.tips.Tip;
-import com.stylefeng.guns.core.exception.GunsException;
-import com.stylefeng.guns.core.exception.GunsExceptionEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -10,10 +7,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.stylefeng.guns.core.base.tips.Tip;
+import com.stylefeng.guns.core.exception.GunsException;
+import com.stylefeng.guns.core.exception.GunsExceptionEnum;
+
 /**
  * 全局的的异常拦截器（拦截所有的控制器）（带有@RequestMapping注解的方法上都会拦截）
  *
- * @author fengshuonan
+ * @author 
  * @date 2016年11月12日 下午3:19:56
  */
 public class BaseControllerExceptionHandler {

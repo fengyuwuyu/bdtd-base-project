@@ -1,5 +1,7 @@
 package com.stylefeng.guns.modular.system.dao;
 
+import java.util.Map;
+
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.stylefeng.guns.modular.system.model.Relation;
 
@@ -12,5 +14,7 @@ import com.stylefeng.guns.modular.system.model.Relation;
  * @since 2017-07-11
  */
 public interface RelationMapper extends BaseMapper<Relation> {
+
+    int insertList(Map<String, Object> createMap);
 
 }

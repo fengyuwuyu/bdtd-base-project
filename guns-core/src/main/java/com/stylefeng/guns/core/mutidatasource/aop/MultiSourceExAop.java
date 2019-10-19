@@ -1,8 +1,5 @@
 package com.stylefeng.guns.core.mutidatasource.aop;
 
-import com.stylefeng.guns.core.mutidatasource.DataSourceContextHolder;
-import com.stylefeng.guns.core.mutidatasource.annotion.DataSource;
-import com.stylefeng.guns.core.mutidatasource.config.MutiDataSourceProperties;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -16,12 +13,16 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
+import com.stylefeng.guns.core.mutidatasource.DataSourceContextHolder;
+import com.stylefeng.guns.core.mutidatasource.annotion.DataSource;
+import com.stylefeng.guns.core.mutidatasource.config.MutiDataSourceProperties;
+
 import java.lang.reflect.Method;
 
 /**
  * 多数据源切换的aop
  *
- * @author fengshuonan
+ * @author 
  * @date 2017年3月5日 上午10:22:16
  */
 @Aspect

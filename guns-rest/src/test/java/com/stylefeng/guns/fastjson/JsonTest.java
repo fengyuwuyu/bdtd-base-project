@@ -8,7 +8,7 @@ import com.stylefeng.guns.rest.modular.auth.converter.BaseTransferEntity;
 /**
  * json测试
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-08-25 16:11
  */
 

@@ -3,6 +3,7 @@ package com.stylefeng.guns.modular.system.service;
 import com.baomidou.mybatisplus.service.IService;
 import com.stylefeng.guns.core.node.ZTreeNode;
 import com.stylefeng.guns.modular.system.model.Role;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * 角色相关业务
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017年1月10日 下午9:11:57
  */
 public interface IRoleService extends IService<Role> {
@@ -65,4 +66,6 @@ public interface IRoleService extends IService<Role> {
      * @date 2017年2月18日 上午10:32:04
      */
     List<ZTreeNode> roleTreeListByRoleId(String[] roleId);
+
+    Integer findRoleType(Map<String, Object> createMap);
 }

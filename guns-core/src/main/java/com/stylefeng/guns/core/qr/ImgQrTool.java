@@ -47,7 +47,7 @@ public class ImgQrTool {
      * @param height        高度
      * @param srcImagePath  被镶嵌的图片的地址
      * @param destImagePath 生成二维码图片的地址
-     * @author fengshuonan
+     * @author 
      * @since 2.3.0
      */
     public static void encode(String content, int width, int height, String srcImagePath, String destImagePath) {
@@ -67,7 +67,7 @@ public class ImgQrTool {
      * @param width         宽度
      * @param height        高度
      * @param srcImagePath  被镶嵌的图片的地址
-     * @author fengshuonan
+     * @author 
      * @since 2.3.0
      */
     public static void encode(String content, int width, int height, String srcImagePath, OutputStream outputStream) {
@@ -83,7 +83,7 @@ public class ImgQrTool {
     /**
      * 创建不带参数的二维码
      *
-     * @author fengshuonan
+     * @author 
      * @since 2.3.0
      */
     public static void createSimpleQr(String content, int width, int height, String destImagePath) {

@@ -1,6 +1,10 @@
 (function () {
 	var errorFunc = function (data) {
-        Feng.error("重置密码失败!");
+		var msg = "服务器异常！";
+		if (data.responseJSON.errors && data.responseJSON.errors[0] && data.responseJSON.errors[0].rejectedValue) {
+			msg = "操作失败, " + (data.responseJSON.errors[0].rejectedValue ? "非法的数据 " +data.responseJSON.errors[0].rejectedValue : data.responseJSON.message) + "!"
+		}
+		Feng.error(msg);
     };
 	var $ax = function (url, success, error) {
 		this.url = url;
@@ -13,7 +17,8 @@
 	};
 	
 	$ax.prototype = {
-		start : function () {	
+		start : function () {
+			var loadIndex = layer.load();
 			var me = this;
 			
 			if (this.url.indexOf("?") == -1) {
@@ -32,10 +37,17 @@
 					
 				},
 		        success: function(data) {
+		        	if (data.code && data.code != 200) {
+		        		Feng.error(data.message || "操作失败！");
+		        		layer.close(loadIndex);
+		        		return;
+		        	}
 		        	me.success(data);
+		        	layer.close(loadIndex);
 		        },
 		        error: function(data) {
 		        	me.error(data);
+		        	layer.close(loadIndex);
 		        }
 		    });
 		}, 

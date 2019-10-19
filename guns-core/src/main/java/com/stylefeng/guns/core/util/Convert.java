@@ -1,15 +1,19 @@
 package com.stylefeng.guns.core.util;
 
-import com.stylefeng.guns.core.support.*;
-import com.stylefeng.guns.core.support.exception.ToolBoxException;
-
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.stylefeng.guns.core.support.*;
+import com.stylefeng.guns.core.support.exception.ToolBoxException;
 
 
 /**
@@ -23,6 +27,22 @@ public class Convert {
 
 	private Convert() {
 		// 静态类不可实例化
+	}
+	
+	public static List<Integer> stringToIntegerList(String str) {
+	   if (str.indexOf("[") != -1) {
+	       str = str.substring(1, str.length() - 1);
+	   }
+	   
+	   List<String> temp = Arrays.asList(str.split(","));
+	   if (temp.size() == 0) {
+	       return Collections.emptyList();
+	   }
+	   return temp.stream().map((item) -> {
+	          return Integer.valueOf(item); 
+	       }).filter((item) -> {
+	           return item != null;
+	       }).collect(Collectors.toList());
 	}
 
 	/**

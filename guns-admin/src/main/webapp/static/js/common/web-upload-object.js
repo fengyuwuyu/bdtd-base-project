@@ -5,19 +5,21 @@
  * 上传按钮的id = 图片隐藏域id + 'BtnId'
  * 图片预览框的id = 图片隐藏域id + 'PreId'
  * 
- * @author fengshuonan
+ * @author 
  */
 (function() {
 	
-	var $WebUpload = function(pictureId) {
+	var $WebUpload = function(pictureId, conf) {
+		conf = conf || {};
 		this.pictureId = pictureId;
 		this.uploadBtnId = pictureId + "BtnId";
 		this.uploadPreId = pictureId + "PreId";
 		this.uploadUrl = Feng.ctxPath + '/mgr/upload';
-		this.fileSizeLimit = 100 * 1024 * 1024;
+		this.fileSizeLimit = 10 * 1024 * 1024;
 		this.picWidth = 800;
 		this.picHeight = 800;
         this.uploadBarId = null;
+        this.showPicture = conf.hasOwnProperty('showPicture') ? conf.showPicture : true;
 	};
 
 	$WebUpload.prototype = {
@@ -39,6 +41,7 @@
 				pick : {
 					id : '#' + this.uploadBtnId,
 					multiple : false,// 只上传一个
+					innerHTML: "上传"
 				},
 				accept : {
 					title : 'Images',

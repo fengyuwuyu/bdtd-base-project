@@ -6,7 +6,7 @@ import java.util.List;
  * 
  * jquery ztree 插件的节点
  * 
- * @author fengshuonan
+ * @author 
  * @date 2017年2月17日 下午8:25:14
  */
 public class ZTreeNode {

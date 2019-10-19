@@ -2,6 +2,7 @@ package com.stylefeng.guns.core.config;
 
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.SimpleDateFormatSerializer;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * fastjson配置类
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-05-23 22:56
  */
 @Configuration("defaultFastjsonConfig")
@@ -65,6 +66,7 @@ public class DefaultFastjsonConfig {
         serializeConfig.put(BigInteger.class, ToStringSerializer.instance);
         serializeConfig.put(Long.class, ToStringSerializer.instance);
         serializeConfig.put(Long.TYPE, ToStringSerializer.instance);
+        serializeConfig.put(java.sql.Date.class, new SimpleDateFormatSerializer("yyyy-MM-dd"));
         fastJsonConfig.setSerializeConfig(serializeConfig);
         return fastJsonConfig;
     }

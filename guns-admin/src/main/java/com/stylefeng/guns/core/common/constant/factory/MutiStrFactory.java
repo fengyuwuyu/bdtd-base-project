@@ -1,17 +1,17 @@
 package com.stylefeng.guns.core.common.constant.factory;
 
-import com.stylefeng.guns.core.support.StrKit;
-import com.stylefeng.guns.core.util.ToolUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.stylefeng.guns.core.support.StrKit;
+import com.stylefeng.guns.core.util.ToolUtil;
+
 /**
  * 组合字符串生产者
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-04-27 16:42
  */
 public class MutiStrFactory {
@@ -44,7 +44,7 @@ public class MutiStrFactory {
     /**
      * 解析一个组合字符串(例如:  "1:启用;2:禁用;3:冻结"  这样的字符串)
      *
-     * @author fengshuonan
+     * @author 
      * @Date 2017/4/27 16:44
      */
     public static List<Map<String,String>> parseKeyValue(String mutiString){
@@ -67,7 +67,7 @@ public class MutiStrFactory {
     /**
      * 解析id:key:value这样类型的字符串
      * 
-     * @author fengshuonan
+     * @author 
      * @Date 2017/4/28 11:06
      */
     public static List<Map<String,String>> parseIdKeyValue(String mutiString){

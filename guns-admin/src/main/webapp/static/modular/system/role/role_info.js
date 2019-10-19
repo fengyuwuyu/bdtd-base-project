@@ -12,20 +12,6 @@ var RolInfoDlg = {
                     message: '用户名不能为空'
                 }
             }
-        },
-        tips: {
-            validators: {
-                notEmpty: {
-                    message: '别名不能为空'
-                }
-            }
-        },
-        pName: {
-            validators: {
-                notEmpty: {
-                    message: '父级名称不能为空'
-                }
-            }
         }
     }
 };
@@ -118,7 +104,7 @@ RolInfoDlg.showPNameSelectTree = function () {
  * 收集数据
  */
 RolInfoDlg.collectData = function () {
-    this.set('id').set('name').set('pid').set('deptid').set('tips').set('num');
+    this.set('id').set('name').set('pid').set('tips').set('num').set('type');
 };
 
 /**
@@ -162,6 +148,7 @@ RolInfoDlg.editSubmit = function () {
     this.clearData();
     this.collectData();
 
+    console.log(this.roleInfoData)
     if (!this.validate()) {
         return;
     }

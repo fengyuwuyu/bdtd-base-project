@@ -23,105 +23,95 @@ public class Role extends Model<Role> {
     /**
      * 主键id
      */
-	@TableId(value="id", type= IdType.AUTO)
-	private Integer id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     /**
      * 序号
      */
-	private Integer num;
+    private Integer num;
     /**
      * 父角色id
      */
-	private Integer pid;
+    private Integer pid;
     /**
      * 角色名称
      */
-	private String name;
-    /**
-     * 部门名称
-     */
-	private Integer deptid;
+    private String name;
     /**
      * 提示
      */
-	private String tips;
+    private String tips;
     /**
      * 保留字段(暂时没用）
      */
-	private Integer version;
+    private Integer version;
 
+    private Integer type;
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getType() {
+        return type;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
-	public Integer getNum() {
-		return num;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setNum(Integer num) {
-		this.num = num;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getPid() {
-		return pid;
-	}
+    public Integer getNum() {
+        return num;
+    }
 
-	public void setPid(Integer pid) {
-		this.pid = pid;
-	}
+    public void setNum(Integer num) {
+        this.num = num;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Integer getPid() {
+        return pid;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
 
-	public Integer getDeptid() {
-		return deptid;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setDeptid(Integer deptid) {
-		this.deptid = deptid;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getTips() {
-		return tips;
-	}
+    public String getTips() {
+        return tips;
+    }
 
-	public void setTips(String tips) {
-		this.tips = tips;
-	}
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
 
-	public Integer getVersion() {
-		return version;
-	}
+    public Integer getVersion() {
+        return version;
+    }
 
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
-	@Override
-	public String toString() {
-		return "Role{" +
-			"id=" + id +
-			", num=" + num +
-			", pid=" + pid +
-			", name=" + name +
-			", deptid=" + deptid +
-			", tips=" + tips +
-			", version=" + version +
-			"}";
-	}
+    @Override
+    public String toString() {
+        return "Role [id=" + id + ", num=" + num + ", pid=" + pid + ", name=" + name + ", tips=" + tips + ", version="
+                + version + ", type=" + type + "]";
+    }
 }

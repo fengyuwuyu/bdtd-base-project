@@ -1,6 +1,28 @@
 package com.stylefeng.guns.modular.system.controller;
 
+import java.io.File;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.naming.NoPermissionException;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.stylefeng.guns.config.properties.GunsProperties;
+import com.stylefeng.guns.core.EnumRoleType;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.base.tips.Tip;
 import com.stylefeng.guns.core.common.annotion.BussinessLog;
@@ -14,6 +36,7 @@ import com.stylefeng.guns.core.datascope.DataScope;
 import com.stylefeng.guns.core.db.Db;
 import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.core.log.LogObjectHolder;
+import com.stylefeng.guns.core.model.EnumGender;
 import com.stylefeng.guns.core.shiro.ShiroKit;
 import com.stylefeng.guns.core.shiro.ShiroUser;
 import com.stylefeng.guns.core.util.ToolUtil;
@@ -23,25 +46,13 @@ import com.stylefeng.guns.modular.system.model.User;
 import com.stylefeng.guns.modular.system.service.IUserService;
 import com.stylefeng.guns.modular.system.transfer.UserDto;
 import com.stylefeng.guns.modular.system.warpper.UserWarpper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.naming.NoPermissionException;
-import javax.validation.Valid;
-import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import com.stylefeng.guns.scmmain.model.DtUser;
+import com.stylefeng.guns.scmmain.service.IDtUserService;
 
 /**
  * 系统管理员控制器
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017年1月11日 下午1:08:17
  */
 @Controller
@@ -55,6 +66,9 @@ public class UserMgrController extends BaseController {
 
     @Autowired
     private IUserService userService;
+    
+    @Autowired
+    private IDtUserService dtUserService;
 
     /**
      * 跳转到查看管理员列表的页面
@@ -68,7 +82,8 @@ public class UserMgrController extends BaseController {
      * 跳转到查看管理员列表的页面
      */
     @RequestMapping("/user_add")
-    public String addView() {
+    public String addView(Model model) {
+        model.addAttribute("sexItemList", EnumGender.select());
         return PREFIX + "user_add.html";
     }
 
@@ -99,10 +114,19 @@ public class UserMgrController extends BaseController {
         }
         assertAuth(userId);
         User user = this.userService.selectById(userId);
+        DtUser dtUser = null;
+        if (user.getAccount().equals("admin")) {
+            dtUser = this.getAdminDtUser();
+        } else {
+            dtUser = this.dtUserService.findByUserNo(user.getUserNo());
+        }
+        user.setDtUser(dtUser);
+        
         model.addAttribute(user);
         model.addAttribute("roleName", ConstantFactory.me().getRoleName(user.getRoleid()));
-        model.addAttribute("deptName", ConstantFactory.me().getDeptName(user.getDeptid()));
+        model.addAttribute("userTypeItemList", EnumRoleType.select());
         LogObjectHolder.me().set(user);
+        model.addAttribute("sexItemList", EnumGender.select());
         return PREFIX + "user_edit.html";
     }
 
@@ -116,11 +140,27 @@ public class UserMgrController extends BaseController {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }
         User user = this.userService.selectById(userId);
+        DtUser dtUser = null;
+        if (user.getAccount().equals("admin")) {
+            dtUser = this.getAdminDtUser();
+        } else {
+            dtUser = this.dtUserService.findByUserNo(user.getUserNo());
+        }
+        
+        user.setDtUser(dtUser);
         model.addAttribute(user);
         model.addAttribute("roleName", ConstantFactory.me().getRoleName(user.getRoleid()));
-        model.addAttribute("deptName", ConstantFactory.me().getDeptName(user.getDeptid()));
+        model.addAttribute("userTypeItemList", EnumRoleType.select());
         LogObjectHolder.me().set(user);
         return PREFIX + "user_view.html";
+    }
+    
+    private DtUser getAdminDtUser() {
+        DtUser dtUser = new DtUser();
+        dtUser.setUserLname("admin");
+        dtUser.setUserDepname("admin");
+        dtUser.setUserNo("admin");
+        return dtUser;
     }
 
     /**
@@ -175,7 +215,7 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/add")
     @BussinessLog(value = "添加管理员", key = "account", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @ResponseBody
     public Tip add(@Valid UserDto user, BindingResult result) {
         if (result.hasErrors()) {
@@ -263,7 +303,7 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/reset")
     @BussinessLog(value = "重置管理员密码", key = "userId", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @ResponseBody
     public Tip reset(@RequestParam Integer userId) {
         if (ToolUtil.isEmpty(userId)) {
@@ -282,7 +322,7 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/freeze")
     @BussinessLog(value = "冻结用户", key = "userId", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @ResponseBody
     public Tip freeze(@RequestParam Integer userId) {
         if (ToolUtil.isEmpty(userId)) {
@@ -302,7 +342,7 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/unfreeze")
     @BussinessLog(value = "解除冻结用户", key = "userId", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @ResponseBody
     public Tip unfreeze(@RequestParam Integer userId) {
         if (ToolUtil.isEmpty(userId)) {
@@ -318,7 +358,7 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/setRole")
     @BussinessLog(value = "分配角色", key = "userId,roleIds", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @ResponseBody
     public Tip setRole(@RequestParam("userId") Integer userId, @RequestParam("roleIds") String roleIds) {
         if (ToolUtil.isOneEmpty(userId, roleIds)) {

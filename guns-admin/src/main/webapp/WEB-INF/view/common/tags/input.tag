@@ -8,15 +8,18 @@
     clickFun : 点击事件的方法名
     style : 附加的css属性
 @*/
-<div class="form-group">
-    <label class="col-sm-3 control-label">${name}</label>
-    <div class="col-sm-9">
-        <input id="${id}" name="${id}"
-        	   @if(isNotEmpty(class)){
-        	   		class="${class} form-control"
-        	   @}else{
-        	   		 class="form-control"
-        	   @}
+<div class="input-group">
+    <div class="input-group-btn">
+        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+            <b>${name}</b>
+        </button>
+    </div>
+        <input id="${id}" name="${id}" 
+                @if(isNotEmpty(class)){
+                    class="${class} easyui-validatebox form-control"
+               @} else {
+                    class="easyui-validatebox form-control"
+               @}
                @if(isNotEmpty(value)){
                     value="${tool.dateType(value)}"
                @}
@@ -38,7 +41,10 @@
                     style="${style}"
                @}
                @if(isNotEmpty(disabled)){
-                    disabled="${disabled}"
+                    readonly="readonly"
+               @}
+               @if(isNotEmpty(placeholder)){
+                    placeholder="${placeholder}"
                @}
         >
         @if(isNotEmpty(hidden)){
@@ -50,10 +56,7 @@
                 <ul id="${selectTreeId}" class="ztree tree-box" style="${selectStyle!}"></ul>
             </div>
         @}
-    </div>
 </div>
 @if(isNotEmpty(underline) && underline == 'true'){
     <div class="hr-line-dashed"></div>
 @}
-
-

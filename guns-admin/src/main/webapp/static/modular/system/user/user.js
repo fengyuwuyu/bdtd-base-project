@@ -18,9 +18,15 @@ MgrUser.initColumn = function () {
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '账号', field: 'account', align: 'center', valign: 'middle', sortable: true},
         {title: '姓名', field: 'name', align: 'center', valign: 'middle', sortable: true},
-        {title: '性别', field: 'sexName', align: 'center', valign: 'middle', sortable: true},
+        {title: '编号', field: 'userNo', align: 'center', valign: 'middle', sortable: true},
+        {title: '性别', field: 'sex', align: 'center', valign: 'middle', sortable: true, formatter: function(value) {
+        	if (value == 1) {
+        		return "男";
+        	}
+        	return "女";
+        }},
         {title: '角色', field: 'roleName', align: 'center', valign: 'middle', sortable: true},
-        {title: '部门', field: 'deptName', align: 'center', valign: 'middle', sortable: true},
+        {title: '部门', field: 'userDepname', align: 'center', valign: 'middle', sortable: true},
         {title: '邮箱', field: 'email', align: 'center', valign: 'middle', sortable: true},
         {title: '电话', field: 'phone', align: 'center', valign: 'middle', sortable: true},
         {title: '创建时间', field: 'createtime', align: 'center', valign: 'middle', sortable: true},

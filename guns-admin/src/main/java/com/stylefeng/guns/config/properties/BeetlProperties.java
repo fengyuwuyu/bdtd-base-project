@@ -1,16 +1,17 @@
 package com.stylefeng.guns.config.properties;
 
-import com.stylefeng.guns.core.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+
+import com.stylefeng.guns.core.util.ToolUtil;
 
 import java.util.Properties;
 
 /**
  * beetl配置(如果需要配置别的配置可参照这个形式自己添加)
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-05-24 20:37
  */
 @Configuration

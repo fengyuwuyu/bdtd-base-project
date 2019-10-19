@@ -6,7 +6,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 /**
  * Guns Web程序启动类
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-05-21 9:43
  */
 public class GunsServletInitializer extends SpringBootServletInitializer {

@@ -143,7 +143,7 @@ UserInfoDlg.hideDeptSelectTree = function () {
  */
 UserInfoDlg.collectData = function () {
     this.set('id').set('account').set('sex').set('password').set('avatar')
-        .set('email').set('name').set('birthday').set('rePassword').set('deptid').set('phone');
+        .set('email').set('name').set('birthday').set('rePassword').set('deptid').set('phone').set('userNo').set('type').set('userDepname');
 };
 
 /**
@@ -184,6 +184,12 @@ UserInfoDlg.addSubmit = function () {
         Feng.error("两次密码输入不一致");
         return;
     }
+    
+    if (!UserCommon.checkDtUser()) {
+    	return;
+    }
+    
+	var data = $('#userInfoForm').serializeObject();
 
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/mgr/add", function (data) {
@@ -193,7 +199,7 @@ UserInfoDlg.addSubmit = function () {
     }, function (data) {
         Feng.error("添加失败!" + data.responseJSON.message + "!");
     });
-    ajax.set(this.userInfoData);
+    ajax.set(data);
     ajax.start();
 };
 
@@ -208,6 +214,11 @@ UserInfoDlg.editSubmit = function () {
     if (!this.validate()) {
         return;
     }
+    
+    if (!UserCommon.checkDtUser()) {
+    	return;
+    }
+	var data = $('#userInfoForm').serializeObject();
 
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/mgr/edit", function (data) {
@@ -219,7 +230,7 @@ UserInfoDlg.editSubmit = function () {
     }, function (data) {
         Feng.error("修改失败!" + data.responseJSON.message + "!");
     });
-    ajax.set(this.userInfoData);
+    ajax.set(data);
     ajax.start();
 };
 
@@ -249,13 +260,13 @@ function onBodyDown(event) {
 $(function () {
     Feng.initValidator("userInfoForm", UserInfoDlg.validateFields);
 
-    var ztree = new $ZTree("treeDemo", "/dept/tree");
-    ztree.bindOnClick(UserInfoDlg.onClickDept);
-    ztree.init();
-    instance = ztree;
+//    var ztree = new $ZTree("treeDemo", "/dept/tree");
+//    ztree.bindOnClick(UserInfoDlg.onClickDept);
+//    ztree.init();
+//    instance = ztree;
 
     //初始化性别选项
-    $("#sex").val($("#sexValue").val());
+//    $("#sex").val($("#sexValue").val());
 
     // 初始化头像上传
     var avatarUp = new $WebUpload("avatar");

@@ -1,8 +1,9 @@
 package com.stylefeng.guns.core.util;
 
 import com.stylefeng.guns.core.common.constant.Const;
-import com.stylefeng.guns.config.properties.GunsProperties;
 import com.stylefeng.guns.core.node.MenuNode;
+import com.stylefeng.guns.core.util.SpringContextHolder;
+import com.stylefeng.guns.config.properties.GunsProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * api接口文档显示过滤
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-08-17 16:55
  */
 public class ApiMenuFilter extends MenuNode {

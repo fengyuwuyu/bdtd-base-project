@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * 初始化flowable数据库(执行前需要先在数据库创建这个数据库,下面以数据库名flowable为例)
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-12-02 20:32
  */
 public class FlowableDbInitTest {

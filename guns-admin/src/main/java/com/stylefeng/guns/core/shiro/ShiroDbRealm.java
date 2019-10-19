@@ -4,6 +4,7 @@ import com.stylefeng.guns.core.shiro.factory.IShiro;
 import com.stylefeng.guns.core.shiro.factory.ShiroFactroy;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.model.User;
+
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -27,6 +28,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         IShiro shiroFactory = ShiroFactroy.me();
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         User user = shiroFactory.user(token.getUsername());
+        
         ShiroUser shiroUser = shiroFactory.shiroUser(user);
         SimpleAuthenticationInfo info = shiroFactory.info(shiroUser, user, super.getName());
         return info;

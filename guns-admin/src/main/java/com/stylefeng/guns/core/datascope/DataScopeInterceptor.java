@@ -3,6 +3,7 @@ package com.stylefeng.guns.core.datascope;
 
 import com.baomidou.mybatisplus.toolkit.PluginUtils;
 import com.stylefeng.guns.core.support.CollectionKit;
+
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -19,7 +20,7 @@ import java.util.Properties;
 /**
  * 数据范围的拦截器
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-07-23 21:26
  */
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})

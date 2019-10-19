@@ -2,13 +2,14 @@ package com.stylefeng.guns.core.log.factory;
 
 import com.stylefeng.guns.core.common.constant.state.LogSucceed;
 import com.stylefeng.guns.core.common.constant.state.LogType;
+import com.stylefeng.guns.core.db.Db;
 import com.stylefeng.guns.modular.system.dao.LoginLogMapper;
 import com.stylefeng.guns.modular.system.dao.OperationLogMapper;
 import com.stylefeng.guns.modular.system.model.LoginLog;
 import com.stylefeng.guns.modular.system.model.OperationLog;
-import com.stylefeng.guns.core.db.Db;
 import com.stylefeng.guns.core.log.LogManager;
 import com.stylefeng.guns.core.util.ToolUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ import java.util.TimerTask;
 /**
  * 日志操作任务创建工厂
  *
- * @author fengshuonan
+ * @author 
  * @date 2016年12月6日 下午9:18:27
  */
 public class LogTaskFactory {

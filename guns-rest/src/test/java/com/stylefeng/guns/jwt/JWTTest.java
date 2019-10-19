@@ -1,16 +1,17 @@
 package com.stylefeng.guns.jwt;
 
-import com.stylefeng.guns.core.util.IdGenerator;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultClaims;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 
 import java.security.Key;
 
+import com.stylefeng.guns.core.util.IdGenerator;
+
 /**
  * jwt测试
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-08-21 16:34
  */
 public class JWTTest {

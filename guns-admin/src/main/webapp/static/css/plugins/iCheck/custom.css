@@ -48,6 +48,11 @@
     background-position: -216px 0;
 }
 
+.textbox, .combo {
+        width: 100%!important;
+        height: 34px!important;
+}
+
 /* HiDPI support */
 @media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
     .icheckbox_square-green,

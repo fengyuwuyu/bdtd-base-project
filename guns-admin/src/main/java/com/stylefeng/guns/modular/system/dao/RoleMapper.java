@@ -3,6 +3,7 @@ package com.stylefeng.guns.modular.system.dao;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.stylefeng.guns.core.node.ZTreeNode;
 import com.stylefeng.guns.modular.system.model.Role;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -50,4 +51,6 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @date 2017年2月18日 上午10:32:04
      */
     List<ZTreeNode> roleTreeListByRoleId(String[] roleId);
+
+    Integer findRoleType(Map<String, Object> params);
 }

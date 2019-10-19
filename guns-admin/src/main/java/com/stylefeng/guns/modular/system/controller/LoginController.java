@@ -1,6 +1,7 @@
 package com.stylefeng.guns.modular.system.controller;
 
 import com.google.code.kaptcha.Constants;
+import com.stylefeng.guns.config.properties.BdtdProperties;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.exception.InvalidKaptchaException;
 import com.stylefeng.guns.core.log.LogManager;
@@ -15,22 +16,27 @@ import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.model.User;
 import com.stylefeng.guns.modular.system.service.IMenuService;
 import com.stylefeng.guns.modular.system.service.IUserService;
+
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import static com.stylefeng.guns.core.support.HttpKit.getIp;
+
+import java.util.Arrays;
 import java.util.List;
 
-import static com.stylefeng.guns.core.support.HttpKit.getIp;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 登录控制器
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017年1月10日 下午8:25:24
  */
 @Controller
@@ -41,12 +47,21 @@ public class LoginController extends BaseController {
 
     @Autowired
     private IUserService userService;
+    @Value("${server.port}")
+    private int port;
+    @Value("${server.context-path}")
+    private String contextPath;
+    @Autowired
+    private BdtdProperties bdtdProperties;
+    
+    private List<String> alertFeverPrivilegeList = Arrays.asList("/patientInfo", "/comprehensive/fever");
 
     /**
      * 跳转到主页
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model) {
+    public String index(HttpServletRequest request, Model model) {
+        model.addAttribute("systemName", bdtdProperties.getSystemName());
         //获取菜单列表
         List<Integer> roleList = ShiroKit.getUser().getRoleList();
         if (roleList == null || roleList.size() == 0) {
@@ -65,7 +80,18 @@ public class LoginController extends BaseController {
         User user = userService.selectById(id);
         String avatar = user.getAvatar();
         model.addAttribute("avatar", avatar);
-
+        
+        String contextPath = request.getContextPath();
+        model.addAttribute("ctxPath", contextPath);
+        model.addAttribute("address", "");
+        for (MenuNode menu : menus) {
+            for (String privilege : alertFeverPrivilegeList) {
+                if (privilege.equals(menu.getUrl())) {
+                    model.addAttribute("address", "http://" + bdtdProperties.getIp() == null ? IpUtil.getLocalAddress() : bdtdProperties.getIp() + ":" + this.port + this.contextPath);
+                    return "/index.html";
+                }
+            }
+        }
         return "/index.html";
     }
 
@@ -73,10 +99,11 @@ public class LoginController extends BaseController {
      * 跳转到登录页面
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
+    public String login(Model model) {
         if (ShiroKit.isAuthenticated() || ShiroKit.getUser() != null) {
             return REDIRECT + "/";
         } else {
+            model.addAttribute("systemName", bdtdProperties.getSystemName());
             return "/login.html";
         }
     }
@@ -112,6 +139,7 @@ public class LoginController extends BaseController {
         currentUser.login(token);
 
         ShiroUser shiroUser = ShiroKit.getUser();
+        
         super.getSession().setAttribute("shiroUser", shiroUser);
         super.getSession().setAttribute("username", shiroUser.getAccount());
 

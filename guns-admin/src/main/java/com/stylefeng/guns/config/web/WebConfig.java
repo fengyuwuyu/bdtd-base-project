@@ -10,6 +10,7 @@ import com.google.code.kaptcha.util.Config;
 import com.stylefeng.guns.config.properties.GunsProperties;
 import com.stylefeng.guns.core.listener.ConfigListener;
 import com.stylefeng.guns.core.xss.XssFilter;
+
 import org.springframework.aop.Advisor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.JdkRegexpMethodPointcut;
@@ -29,7 +30,7 @@ import java.util.Properties;
 /**
  * web 配置类
  *
- * @author fengshuonan
+ * @author 
  * @date 2016年11月12日 下午5:03:32
  */
 @Configuration

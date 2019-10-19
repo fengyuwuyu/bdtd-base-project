@@ -103,7 +103,7 @@ $(function () {
     table.setIdField("id");
     table.setCodeField("id");
     table.setParentCodeField("pid");
-    table.setExpandAll(true);
+    table.setExpandAll(false);
     table.init();
     Dept.table = table;
 });

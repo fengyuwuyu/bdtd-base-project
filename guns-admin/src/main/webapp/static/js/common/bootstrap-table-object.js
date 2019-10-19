@@ -3,10 +3,11 @@
  *
  * 约定：toolbar的id为 (bstableId + "Toolbar")
  *
- * @author fengshuonan
+ * @author 
  */
 (function () {
-    var BSTable = function (bstableId, url, columns) {
+    var BSTable = function (bstableId, url, columns, conf) {
+    	conf = conf || {};
         this.btInstance = null;					//jquery和BootStrapTable绑定的对象
         this.bstableId = bstableId;
         this.url = Feng.ctxPath + url;
@@ -14,9 +15,12 @@
         this.paginationType = "server";			//默认分页方式是服务器分页,可选项"client"
         this.toolbarId = bstableId + "Toolbar";
         this.columns = columns;
-        this.height = 686;						//默认表格高度665
+        this.height = conf.height || 686;						//默认表格高度665
         this.data = {};
-        this.queryParams = {}; // 向后台传递的自定义参数
+        this.queryParams = conf.queryParams || {}; // 向后台传递的自定义参数
+        this.showRefresh = conf.hasOwnProperty('showRefresh') ? conf.showRefresh : false;
+        this.showColumns = conf.hasOwnProperty('showColumns') ? conf.showColumns : false;
+        this.pagination = conf.hasOwnProperty('pagination') ? conf.pagination : true;
     };
 
     BSTable.prototype = {
@@ -37,7 +41,7 @@
                     toolbar: "#" + this.toolbarId,//顶部工具条
                     striped: true,     			//是否显示行间隔色
                     cache: false,      			//是否使用缓存,默认为true
-                    pagination: true,     		//是否显示分页（*）
+                    pagination: this.pagination,     		//是否显示分页（*）
                     sortable: true,      		//是否启用排序
                     sortOrder: "desc",     		//排序方式
                     pageNumber: 1,      			//初始化加载第一页，默认第一页
@@ -50,14 +54,19 @@
                     sidePagination: this.paginationType,   //分页方式：client客户端分页，server服务端分页（*）
                     search: false,      		//是否显示表格搜索，此搜索是客户端搜索，不会进服务端
                     strictSearch: true,			//设置为 true启用 全匹配搜索，否则为模糊搜索
-                    showColumns: true,     		//是否显示所有的列
-                    showRefresh: true,     		//是否显示刷新按钮
+                    showColumns: this.showColumns,     		//是否显示所有的列
+                    showRefresh: this.showRefresh,     		//是否显示刷新按钮
                     minimumCountColumns: 2,    	//最少允许的列数
                     clickToSelect: true,    	//是否启用点击选中行
                     searchOnEnterKey: true,		//设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
                     columns: this.columns,		//列数组
-                    pagination: true,			//是否显示分页条
                     height: this.height,
+//                    responseHandler: function(data) {
+//                    	return {
+//                    		total: data.total,
+//                    		rows: data.records
+//                    	};
+//                    },
                     icons: {
                         refresh: 'glyphicon-repeat',
                         toggle: 'glyphicon-list-alt',

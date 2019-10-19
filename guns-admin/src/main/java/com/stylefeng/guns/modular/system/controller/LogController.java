@@ -12,6 +12,7 @@ import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.modular.system.model.OperationLog;
 import com.stylefeng.guns.modular.system.service.IOperationLogService;
 import com.stylefeng.guns.modular.system.warpper.LogWarpper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,7 @@ import java.util.Map;
 /**
  * 日志管理的控制器
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017年4月5日 19:45:36
  */
 @Controller

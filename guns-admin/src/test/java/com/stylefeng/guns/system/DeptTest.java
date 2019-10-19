@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * 字典服务测试
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-04-27 17:05
  */
 public class DeptTest extends BaseJunit {

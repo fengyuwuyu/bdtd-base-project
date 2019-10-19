@@ -35,6 +35,7 @@
         <if test="level != null and level != ''">
             and levels = #{level}
         </if>
+        order by num
     </select>
 
     <select id="getMenuIdsByRoleId" resultType="long">
@@ -67,7 +68,7 @@
         sys_menu m1
         LEFT join sys_menu m2 ON m1.pcode = m2. CODE
         ORDER BY
-        m1.id ASC
+        m1.num
     </select>
 
     <select id="menuTreeListByMenuIds" resultType="com.stylefeng.guns.core.node.ZTreeNode">
@@ -118,7 +119,7 @@
         </foreach>
         ) m3 on m1.id = m3.id
         ORDER BY
-        m1.id ASC
+        m1.num ASC
     </select>
 
     <delete id="deleteRelationByMenu">

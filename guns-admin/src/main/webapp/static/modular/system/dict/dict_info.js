@@ -1,111 +1,104 @@
 /**
- * 初始化字典详情对话框
+ * 初始化详情对话框
  */
 var DictInfoDlg = {
-    count: $("#itemSize").val(),
-    dictName: '',			//字典的名称
-    mutiString: '',		//拼接字符串内容(拼接字典条目)
-    itemTemplate: $("#itemTemplate").html()
+    dictInfoData : {}
 };
 
 /**
- * item获取新的id
+ * 清除数据
  */
-DictInfoDlg.newId = function () {
-    if(this.count == undefined){
-        this.count = 0;
-    }
-    this.count = this.count + 1;
-    return "dictItem" + this.count;
-};
+DictInfoDlg.clearData = function() {
+    this.dictInfoData = {};
+}
+
+/**
+ * 设置对话框中的数据
+ *
+ * @param key 数据的名称
+ * @param val 数据的具体值
+ */
+DictInfoDlg.set = function(key, val) {
+    this.dictInfoData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
+    return this;
+}
+
+/**
+ * 设置对话框中的数据
+ *
+ * @param key 数据的名称
+ * @param val 数据的具体值
+ */
+DictInfoDlg.get = function(key) {
+    return $("#" + key).val();
+}
 
 /**
  * 关闭此对话框
  */
-DictInfoDlg.close = function () {
+DictInfoDlg.close = function() {
     parent.layer.close(window.parent.Dict.layerIndex);
-};
+}
 
 /**
- * 添加条目
+ * 收集数据
  */
-DictInfoDlg.addItem = function () {
-    $("#itemsArea").append(this.itemTemplate);
-    $("#dictItem").attr("id", this.newId());
-};
+DictInfoDlg.collectData = function() {
+    this.set('id')
+    .set('pid')
+    .set('name')
+    .set('enName')
+    .set('content');
+}
 
 /**
- * 删除item
+ * 提交添加
  */
-DictInfoDlg.deleteItem = function (event) {
-    var obj = Feng.eventParseObject(event);
-    obj = obj.is('button') ? obj : obj.parent();
-    obj.parent().parent().remove();
-};
+DictInfoDlg.addSubmit = function() {
+	
+	if (!$('#addForm').form('validate')) {
+		return;
+	}
 
-/**
- * 清除为空的item Dom
- */
-DictInfoDlg.clearNullDom = function(){
-    $("[name='dictItem']").each(function(){
-        var num = $(this).find("[name='itemNum']").val();
-        var name = $(this).find("[name='itemName']").val();
-        if(num == '' || name == ''){
-            $(this).remove();
-        }
-    });
-};
-
-/**
- * 收集添加字典的数据
- */
-DictInfoDlg.collectData = function () {
-    this.clearNullDom();
-    var mutiString = "";
-    $("[name='dictItem']").each(function(){
-        var num = $(this).find("[name='itemNum']").val();
-        num = num | '';
-        console.log(num)
-        var name = $(this).find("[name='itemName']").val();
-        mutiString = mutiString + (num + ":" + name + ";");
-    });
-    this.dictName = $("#dictName").val();
-    this.mutiString = mutiString;
-};
-
-
-/**
- * 提交添加字典
- */
-DictInfoDlg.addSubmit = function () {
+    this.clearData();
     this.collectData();
+
     //提交信息
-    var ajax = new $ax(Feng.ctxPath + "/dict/add", function (data) {
+    var ajax = new $ax(Feng.ctxPath + "/dict/add", function(data){
         Feng.success("添加成功!");
         window.parent.Dict.table.refresh();
         DictInfoDlg.close();
-    }, function (data) {
+    },function(data){
         Feng.error("添加失败!" + data.responseJSON.message + "!");
     });
-    ajax.set('dictName',this.dictName);
-    ajax.set('dictValues',this.mutiString);
+    ajax.set(this.dictInfoData);
     ajax.start();
-};
+}
 
 /**
  * 提交修改
  */
-DictInfoDlg.editSubmit = function () {
+DictInfoDlg.editSubmit = function() {
+	
+	if (!$('#editForm').form('validate')) {
+		return;
+	}
+
+    this.clearData();
     this.collectData();
-    var ajax = new $ax(Feng.ctxPath + "/dict/update", function (data) {
+
+    //提交信息
+    var ajax = new $ax(Feng.ctxPath + "/dict/update", function(data){
         Feng.success("修改成功!");
         window.parent.Dict.table.refresh();
         DictInfoDlg.close();
-    }, function (data) {
+    },function(data){
         Feng.error("修改失败!" + data.responseJSON.message + "!");
     });
-    ajax.set('dictId',$("#dictId").val());
-    ajax.set('dictName',this.dictName);
-    ajax.set('dictValues',this.mutiString);
+    ajax.set(this.dictInfoData);
     ajax.start();
-};
+}
+
+$(function() {
+
+});

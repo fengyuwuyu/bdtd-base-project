@@ -3,6 +3,7 @@ package com.stylefeng.guns.core.util;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -16,6 +17,15 @@ import com.stylefeng.guns.core.support.HttpKit;
  * @description: 从request里面获得IP 
  */
 public class IpUtil {
+    
+    public static String getLocalAddress() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return "127.0.0.1";
+    }
 
 	public static String getIp(){
 		return IpUtil.getIpAddress(HttpKit.getRequest());

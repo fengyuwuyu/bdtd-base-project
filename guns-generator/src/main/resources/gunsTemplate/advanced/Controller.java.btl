@@ -1,13 +1,20 @@
 package ${controller.packageName};
 
+import java.util.Date;
+import java.util.Map;
 <% for(import in controller.imports!){ %>
 import ${import};
 <% } %>
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.stylefeng.guns.core.consts.Consts;
+import com.stylefeng.guns.core.util.MapUtil;
 
 /**
  * ${context.bizChName}控制器
  *
- * @author fengshuonan
+ * @author 
  * @Date ${tool.currentTime()}
  */
 @Controller
@@ -51,8 +58,10 @@ public class ${context.bizEnBigName}Controller extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return ${context.bizEnName}Service.selectList(null);
+    public Object list(String condition, Integer offset, Integer limit) {
+    	Wrapper<${context.entityName}> wrapper = new EntityWrapper<>();
+    	Page<Map<String, Object>> page = ${context.bizEnName}Service.selectMapsPage(new Page<>(offset, limit, Consts.DEFAULT_SORT_FIELD, Consts.DEFAULT_SORT_ORDER_IS_ASC), wrapper);
+		return MapUtil.createSuccessMap("rows", page.getRecords(), "total", page.getTotal());
     }
 
     /**
@@ -61,6 +70,9 @@ public class ${context.bizEnBigName}Controller extends BaseController {
     @RequestMapping(value = "/add")
     @ResponseBody
     public Object add(${context.entityName} ${context.bizEnName}) {
+        Date createDate = new Date();
+        ${context.bizEnName}.setCreateDate(createDate);
+        ${context.bizEnName}.setUpdateDate(createDate);
         ${context.bizEnName}Service.insert(${context.bizEnName});
         return SUCCESS_TIP;
     }
@@ -81,6 +93,7 @@ public class ${context.bizEnBigName}Controller extends BaseController {
     @RequestMapping(value = "/update")
     @ResponseBody
     public Object update(${context.entityName} ${context.bizEnName}) {
+        ${context.bizEnName}.setUpdateDate(new Date());
         ${context.bizEnName}Service.updateById(${context.bizEnName});
         return SUCCESS_TIP;
     }

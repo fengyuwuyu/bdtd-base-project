@@ -9,4 +9,10 @@
 		<result column="roleid" property="roleid" />
 	</resultMap>
 
+    <insert id="insertList" parameterType="map">
+        insert into sys_relation(menuid, roleid) values 
+        <foreach collection="menuIds" item="item" separator="," >
+            (#{item}, #{roleId})
+        </foreach>
+    </insert>
 </mapper>

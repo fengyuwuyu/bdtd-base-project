@@ -13,6 +13,7 @@
 
                                 <input type="hidden" id="id" value="${user.id}">
                                 <input type="hidden" id="sexValue" value="${user.sex}">
+                                <input type="hidden" id="userNo" name="userNo" value="${user.dtUser.userNo}">
 
                                 <div class="row">
                                     <div class="col-sm-6 b-r">
@@ -26,25 +27,14 @@
                                         </#select>
 
                                         <#input id="roleid" name="角色" underline="true" value="${roleName}" disabled="disabled"/>
-
-                                        <#input id="email" name="邮箱" type="email" value="${user.email}"/>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div id="driverInfoContent">
+                                            <#input id="email" name="邮箱" underline="true" type="email" value="${user.email}"/>
                                             <#input id="name" name="姓名" underline="true" value="${user.name}"/>
-
-                                            <#input id="birthday" name="出生日期" underline="true"
-                                                    value="${user.birthday}"
-                                                    clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
-
-                                            <#input id="citySel" name="部门" underline="true" readonly="readonly" value="${deptName}"
-                                                    hidden="deptid" hiddenValue="${user.deptid}"
-                                                    clickFun="UserInfoDlg.showInfoDeptSelectTree(); return false;"
-                                                    style="background-color: #ffffff !important;"
-                                                    selectFlag="true" selectId="menuContent" selectTreeId="treeDemo" selectStyle="width:250px !important;"/>
-
-                                            <#input id="phone" name="电话" value="${user.phone}"/>
+                                            <#input id="citySel" name="部门" underline="true" readonly="readonly" value="${user.dtUser.userDepname}" />
+                                            <#input id="phone" name="电话" value="${user.dtUser.userTelephone}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -67,5 +57,6 @@
         </div>
     </div>
 </div>
+<script src="${ctxPath}/static/modular/system/user/user_common.js"></script>
 <script src="${ctxPath}/static/modular/system/user/user_info.js"></script>
 @}

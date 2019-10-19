@@ -7,8 +7,8 @@
 <div class="input-group">
     <div class="input-group-btn">
         <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
-                type="button">${name}
+                type="button"><b>${name}</b>
         </button>
     </div>
-    <input type="text" class="form-control" id="${id}" placeholder="${placeholder!}" />
+    <input type="text" class="form-control" name="${id}" id="${id}" placeholder="${placeholder!}" />
 </div>

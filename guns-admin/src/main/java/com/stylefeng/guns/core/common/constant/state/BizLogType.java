@@ -3,7 +3,7 @@ package com.stylefeng.guns.core.common.constant.state;
 /**
  * 业务日志类型
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017年1月22日 下午12:14:59
  */
 public enum BizLogType {

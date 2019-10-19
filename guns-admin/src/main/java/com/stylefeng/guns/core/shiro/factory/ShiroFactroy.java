@@ -1,13 +1,8 @@
 package com.stylefeng.guns.core.shiro.factory;
 
-import com.stylefeng.guns.core.common.constant.factory.ConstantFactory;
-import com.stylefeng.guns.core.common.constant.state.ManagerStatus;
-import com.stylefeng.guns.core.shiro.ShiroUser;
-import com.stylefeng.guns.core.util.Convert;
-import com.stylefeng.guns.core.util.SpringContextHolder;
-import com.stylefeng.guns.modular.system.dao.MenuMapper;
-import com.stylefeng.guns.modular.system.dao.UserMapper;
-import com.stylefeng.guns.modular.system.model.User;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.shiro.authc.CredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -18,9 +13,16 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.stylefeng.guns.core.common.constant.factory.ConstantFactory;
+import com.stylefeng.guns.core.common.constant.state.ManagerStatus;
+import com.stylefeng.guns.core.shiro.ShiroUser;
+import com.stylefeng.guns.core.util.Convert;
+import com.stylefeng.guns.core.util.SpringContextHolder;
+import com.stylefeng.guns.modular.system.dao.MenuMapper;
+import com.stylefeng.guns.modular.system.dao.UserMapper;
+import com.stylefeng.guns.modular.system.model.User;
+import com.stylefeng.guns.scmmain.model.DtUser;
+import com.stylefeng.guns.scmmain.service.IDtUserService;
 
 @Service
 @DependsOn("springContextHolder")
@@ -32,6 +34,9 @@ public class ShiroFactroy implements IShiro {
 
     @Autowired
     private MenuMapper menuMapper;
+    
+    @Autowired
+    private IDtUserService dtUserService;
 
     public static IShiro me() {
         return SpringContextHolder.getBean(IShiro.class);
@@ -49,6 +54,18 @@ public class ShiroFactroy implements IShiro {
         if (user.getStatus() != ManagerStatus.OK.getCode()) {
             throw new LockedAccountException();
         }
+        
+        DtUser dtUser = null;
+        if (!user.getName().equals("admin")) {
+            dtUser = dtUserService.findByUserNo(user.getUserNo());
+        } else {
+            dtUser = new DtUser();
+            dtUser.setUserNo("admin");
+            dtUser.setUserDepname("admin");
+            dtUser.setUserLname(user.getName());
+            dtUser.setUserDep(10000);
+        }
+        user.setDtUser(dtUser);
         return user;
     }
 
@@ -61,6 +78,8 @@ public class ShiroFactroy implements IShiro {
         shiroUser.setDeptId(user.getDeptid());
         shiroUser.setDeptName(ConstantFactory.me().getDeptName(user.getDeptid()));
         shiroUser.setName(user.getName());
+        shiroUser.setDtUser(user.getDtUser());
+        shiroUser.setUserNo(user.getUserNo());
 
         Integer[] roleArray = Convert.toIntArray(user.getRoleid());
         List<Integer> roleList = new ArrayList<Integer>();

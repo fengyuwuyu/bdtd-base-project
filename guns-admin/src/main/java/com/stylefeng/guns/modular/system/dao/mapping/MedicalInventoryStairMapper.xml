@@ -11,11 +11,13 @@
         <result column="specification" property="specification" />
         <result column="unit" property="unit" />
         <result column="remark" property="remark" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, medical_name AS medicalName, spell, producer, specification, unit, remark
+        id, medical_name AS medicalName, spell, producer, specification, unit, remark, create_date AS createDate, update_date AS updateDate
     </sql>
 
 </mapper>

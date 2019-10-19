@@ -1,12 +1,14 @@
 package com.stylefeng.guns.modular.system.model;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-
-import java.io.Serializable;
-import java.util.Date;
+import com.stylefeng.guns.scmmain.model.DtUser;
 
 /**
  * <p>
@@ -24,209 +26,228 @@ public class User extends Model<User> {
     /**
      * 主键id
      */
-	@TableId(value="id", type= IdType.AUTO)
-	private Integer id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     /**
      * 头像
      */
-	private String avatar;
+    private String avatar;
     /**
      * 账号
      */
-	private String account;
+    private String account;
     /**
      * 密码
      */
-	private String password;
+    private String password;
     /**
      * md5密码盐
      */
-	private String salt;
+    private String salt;
     /**
      * 名字
      */
-	private String name;
+    private String name;
     /**
      * 生日
      */
-	private Date birthday;
+    private Date birthday;
     /**
      * 性别（1：男 2：女）
      */
-	private Integer sex;
+    private Integer sex;
     /**
      * 电子邮件
      */
-	private String email;
+    private String email;
     /**
      * 电话
      */
-	private String phone;
+    private String phone;
     /**
      * 角色id
      */
-	private String roleid;
+    private String roleid;
     /**
      * 部门id
      */
-	private Integer deptid;
+    private Integer deptid;
     /**
-     * 状态(1：启用  2：冻结  3：删除）
+     * 状态(1：启用 2：冻结 3：删除）
      */
-	private Integer status;
+    private Integer status;
     /**
      * 创建时间
      */
-	private Date createtime;
+    private Date createtime;
     /**
      * 保留字段
      */
-	private Integer version;
+    private Integer version;
 
+    @TableField("user_no")
+    private String userNo;
+    @TableField("user_depname")
+    private String userDepname;
 
-	public Integer getId() {
-		return id;
-	}
+    @TableField(exist = false)
+    private DtUser dtUser;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public DtUser getDtUser() {
+        return dtUser;
+    }
 
-	public String getAvatar() {
-		return avatar;
-	}
+    public void setDtUser(DtUser dtUser) {
+        this.dtUser = dtUser;
+    }
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getAccount() {
-		return account;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setAccount(String account) {
-		this.account = account;
-	}
+    public String getAvatar() {
+        return avatar;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getAccount() {
+        return account;
+    }
 
-	public String getSalt() {
-		return salt;
-	}
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getSalt() {
+        return salt;
+    }
 
-	public Date getBirthday() {
-		return birthday;
-	}
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Integer getSex() {
-		return sex;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
+    public Date getBirthday() {
+        return birthday;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public Integer getSex() {
+        return sex;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getRoleid() {
-		return roleid;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setRoleid(String roleid) {
-		this.roleid = roleid;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public Integer getDeptid() {
-		return deptid;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setDeptid(Integer deptid) {
-		this.deptid = deptid;
-	}
+    public String getRoleid() {
+        return roleid;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public void setRoleid(String roleid) {
+        this.roleid = roleid;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public Integer getDeptid() {
+        return deptid;
+    }
 
-	public Date getCreatetime() {
-		return createtime;
-	}
+    public void setDeptid(Integer deptid) {
+        this.deptid = deptid;
+    }
 
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
-	}
+    public Integer getStatus() {
+        return status;
+    }
 
-	public Integer getVersion() {
-		return version;
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
+    public Date getCreatetime() {
+        return createtime;
+    }
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
 
-	@Override
-	public String toString() {
-		return "User{" +
-			"id=" + id +
-			", avatar=" + avatar +
-			", account=" + account +
-			", password=" + password +
-			", salt=" + salt +
-			", name=" + name +
-			", birthday=" + birthday +
-			", sex=" + sex +
-			", email=" + email +
-			", phone=" + phone +
-			", roleid=" + roleid +
-			", deptid=" + deptid +
-			", status=" + status +
-			", createtime=" + createtime +
-			", version=" + version +
-			"}";
-	}
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
+
+    public String getUserNo() {
+        return userNo;
+    }
+
+    public void setUserNo(String userNo) {
+        this.userNo = userNo;
+    }
+
+    public String getUserDepname() {
+        return userDepname;
+    }
+
+    public void setUserDepname(String userDepname) {
+        this.userDepname = userDepname;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", avatar=" + avatar + ", account=" + account + ", password=" + password + ", salt="
+                + salt + ", name=" + name + ", birthday=" + birthday + ", sex=" + sex + ", email=" + email + ", phone="
+                + phone + ", roleid=" + roleid + ", deptid=" + deptid + ", status=" + status + ", createtime="
+                + createtime + ", version=" + version + ", userNo=" + userNo + ", userDepname=" + userDepname
+                + ", dtUser=" + dtUser + "]";
+    }
 }

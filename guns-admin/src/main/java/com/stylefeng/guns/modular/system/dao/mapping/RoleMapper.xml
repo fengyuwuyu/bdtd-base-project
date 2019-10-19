@@ -8,13 +8,13 @@
 		<result column="num" property="num" />
 		<result column="pid" property="pid" />
 		<result column="name" property="name" />
-		<result column="deptid" property="deptid" />
 		<result column="tips" property="tips" />
 		<result column="version" property="version" />
+        <result column="type" property="type" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, num, pid, name, deptid, tips, version
+		id, num, pid, name, tips, version, type
 	</sql>
 
 	<select id="selectRoles" resultType="map">
@@ -75,5 +75,16 @@
 		ORDER BY
 		pId,
 		num ASC
+	</select>
+	
+	<select id="findRoleType" parameterType="map" resultType="int">
+	   select max(a.type) from sys_role a 
+		left join sys_relation b on a.id=b.roleid 
+		left join sys_menu c on b.menuid=c.id
+		where a.id in 
+        <foreach collection="roleIdList" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+         and c.url=#{url}
 	</select>
 </mapper>

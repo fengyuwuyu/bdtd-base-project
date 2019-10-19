@@ -1,16 +1,17 @@
 package com.stylefeng.guns.core.log;
 
-import com.stylefeng.guns.core.util.SpringContextHolder;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.stylefeng.guns.core.util.SpringContextHolder;
 
 import java.io.Serializable;
 
 /**
  * 被修改的bean临时存放的地方
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-03-31 11:19
  */
 @Component

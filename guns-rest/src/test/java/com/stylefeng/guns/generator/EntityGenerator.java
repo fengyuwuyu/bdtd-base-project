@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * 实体生成
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-08-23 12:15
  */
 public class EntityGenerator {

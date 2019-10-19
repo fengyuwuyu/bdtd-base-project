@@ -1,21 +1,21 @@
 package com.stylefeng.guns.modular.system.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.enums.IdType;
 
 /**
  * <p>
- * 药品一级库存表
+ * 药品目录管理
  * </p>
  *
  * @author lilei123
- * @since 2018-06-18
+ * @since 2018-06-28
  */
 @TableName("bdtd_medical_inventory_stair")
 public class MedicalInventoryStair extends Model<MedicalInventoryStair> {
@@ -34,9 +34,9 @@ public class MedicalInventoryStair extends Model<MedicalInventoryStair> {
      */
     private String spell;
     /**
-     * 生产商
+     * 生产企业
      */
-    private Integer producer;
+    private String producer;
     /**
      * 规格
      */
@@ -49,7 +49,16 @@ public class MedicalInventoryStair extends Model<MedicalInventoryStair> {
      * 备注
      */
     private String remark;
-
+    /**
+     * 创建时间
+     */
+    @TableField("create_date")
+    private Date createDate;
+    /**
+     * 更新时间
+     */
+    @TableField("update_date")
+    private Date updateDate;
 
     public Integer getId() {
         return id;
@@ -75,11 +84,11 @@ public class MedicalInventoryStair extends Model<MedicalInventoryStair> {
         this.spell = spell;
     }
 
-    public Integer getProducer() {
+    public String getProducer() {
         return producer;
     }
 
-    public void setProducer(Integer producer) {
+    public void setProducer(String producer) {
         this.producer = producer;
     }
 
@@ -107,6 +116,22 @@ public class MedicalInventoryStair extends Model<MedicalInventoryStair> {
         this.remark = remark;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -114,14 +139,8 @@ public class MedicalInventoryStair extends Model<MedicalInventoryStair> {
 
     @Override
     public String toString() {
-        return "MedicalInventoryStair{" +
-        "id=" + id +
-        ", medicalName=" + medicalName +
-        ", spell=" + spell +
-        ", producer=" + producer +
-        ", specification=" + specification +
-        ", unit=" + unit +
-        ", remark=" + remark +
-        "}";
+        return "MedicalInventoryStair [id=" + id + ", medicalName=" + medicalName + ", spell=" + spell + ", producer="
+                + producer + ", specification=" + specification + ", unit=" + unit + ", remark=" + remark
+                + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
     }
 }

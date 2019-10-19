@@ -14,6 +14,12 @@ var ${context.bizEnBigName} = {
 ${context.bizEnBigName}.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
+        {
+            title: '序号',
+            field: '',
+            align: 'center',
+            formatter: Feng.getTableSerialNumberFunc(${context.bizEnBigName}.id)
+        },
         <% for(item in table.fields!){ %>
         <% if(itemLP.last != true){ %>
             {title: '${item.comment}', field: '${item.propertyName}', visible: true, align: 'center', valign: 'middle'},
@@ -38,13 +44,22 @@ ${context.bizEnBigName}.check = function () {
 };
 
 /**
+ * 重置搜索表单，并刷新
+ */
+${context.bizEnBigName}.resetSearchForm = function () {
+    Feng.clearSearchForm(function() {
+        ${context.bizEnBigName}.search();
+    });
+};
+
+/**
  * 点击添加${context.bizChName}
  */
 ${context.bizEnBigName}.openAdd${context.bizEnBigName} = function () {
     var index = layer.open({
         type: 2,
         title: '添加${context.bizChName}',
-        area: ['800px', '420px'], //宽高
+        area: ['800px', '600px'], //宽高
         fix: false, //不固定
         maxmin: true,
         content: Feng.ctxPath + '/${context.bizEnName}/${context.bizEnName}_add'
@@ -60,7 +75,7 @@ ${context.bizEnBigName}.open${context.bizEnBigName}Detail = function () {
         var index = layer.open({
             type: 2,
             title: '${context.bizChName}详情',
-            area: ['800px', '420px'], //宽高
+            area: ['800px', '600px'], //宽高
             fix: false, //不固定
             maxmin: true,
             content: Feng.ctxPath + '/${context.bizEnName}/${context.bizEnName}_update/' + ${context.bizEnBigName}.seItem.id
@@ -93,14 +108,12 @@ ${context.bizEnBigName}.delete = function () {
  * 查询${context.bizChName}列表
  */
 ${context.bizEnBigName}.search = function () {
-    var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    var queryData = $('#searchForm').serializeObject();
     ${context.bizEnBigName}.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = ${context.bizEnBigName}.initColumn();
     var table = new BSTable(${context.bizEnBigName}.id, "/${context.bizEnName}/list", defaultColunms);
-    table.setPaginationType("client");
     ${context.bizEnBigName}.table = table.init();
 });

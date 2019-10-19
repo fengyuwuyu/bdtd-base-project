@@ -12,6 +12,7 @@ import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.model.Notice;
 import com.stylefeng.guns.modular.system.service.INoticeService;
 import com.stylefeng.guns.modular.system.warpper.NoticeWrapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,7 @@ import java.util.Map;
 /**
  * 通知控制器
  *
- * @author fengshuonan
+ * @author 
  * @Date 2017-05-09 23:02:21
  */
 @Controller

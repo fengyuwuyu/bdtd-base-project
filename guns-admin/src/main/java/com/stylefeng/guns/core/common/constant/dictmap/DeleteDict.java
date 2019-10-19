@@ -5,7 +5,7 @@ import com.stylefeng.guns.core.common.constant.dictmap.base.AbstractDictMap;
 /**
  * 用于删除业务的字典
  *
- * @author fengshuonan
+ * @author 
  * @date 2017-05-06 15:01
  */
 public class DeleteDict extends AbstractDictMap {

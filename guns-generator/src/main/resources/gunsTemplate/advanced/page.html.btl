@@ -2,20 +2,18 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>${context.bizChName}管理</h5>
-            </div>
             <div class="ibox-content">
                 <div class="row row-lg">
                     <div class="col-sm-12">
-                        <div class="row">
+                        <form id="searchForm" class="row">
                             <div class="col-sm-3">
                                 <#NameCon id="condition" name="名称" />
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="${context.bizEnBigName}.search()"/>
+                                <#button name="重置" icon="fa-refresh" clickFun="${context.bizEnBigName}.resetSearchForm()"/>
                             </div>
-                        </div>
+                        </form>
                         <div class="hidden-xs" id="${context.bizEnBigName}TableToolbar" role="group">
                             @if(shiro.hasPermission("/${context.bizEnName}/add")){
                                 <#button name="添加" icon="fa-plus" clickFun="${context.bizEnBigName}.openAdd${context.bizEnBigName}()"/>

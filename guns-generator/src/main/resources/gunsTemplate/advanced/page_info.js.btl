@@ -2,36 +2,8 @@
  * 初始化${context.bizChName}详情对话框
  */
 var ${context.bizEnBigName}InfoDlg = {
-    ${context.bizEnName}InfoData : {}
+
 };
-
-/**
- * 清除数据
- */
-${context.bizEnBigName}InfoDlg.clearData = function() {
-    this.${context.bizEnName}InfoData = {};
-}
-
-/**
- * 设置对话框中的数据
- *
- * @param key 数据的名称
- * @param val 数据的具体值
- */
-${context.bizEnBigName}InfoDlg.set = function(key, val) {
-    this.${context.bizEnName}InfoData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
-    return this;
-}
-
-/**
- * 设置对话框中的数据
- *
- * @param key 数据的名称
- * @param val 数据的具体值
- */
-${context.bizEnBigName}InfoDlg.get = function(key) {
-    return $("#" + key).val();
-}
 
 /**
  * 关闭此对话框
@@ -40,36 +12,25 @@ ${context.bizEnBigName}InfoDlg.close = function() {
     parent.layer.close(window.parent.${context.bizEnBigName}.layerIndex);
 }
 
-/**
- * 收集数据
- */
-${context.bizEnBigName}InfoDlg.collectData = function() {
-    this
-    <% for(item in table.fields!){ %>
-    <% if(itemLP.last != true){ %>
-    .set('${item.propertyName}')
-    <% }else{ %>
-    .set('${item.propertyName}');
-    <% }} %>
-}
 
 /**
  * 提交添加
  */
 ${context.bizEnBigName}InfoDlg.addSubmit = function() {
-
-    this.clearData();
-    this.collectData();
+	var addForm = $('#addForm');
+	if (!Feng.validateForm(addForm)) {
+		return;
+	}
+	
+	var data = addForm.serializeObjectFilterNull();
 
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/${context.bizEnName}/add", function(data){
         Feng.success("添加成功!");
         window.parent.${context.bizEnBigName}.table.refresh();
         ${context.bizEnBigName}InfoDlg.close();
-    },function(data){
-        Feng.error("添加失败!" + data.responseJSON.message + "!");
     });
-    ajax.set(this.${context.bizEnName}InfoData);
+    ajax.set(data);
     ajax.start();
 }
 
@@ -77,19 +38,20 @@ ${context.bizEnBigName}InfoDlg.addSubmit = function() {
  * 提交修改
  */
 ${context.bizEnBigName}InfoDlg.editSubmit = function() {
-
-    this.clearData();
-    this.collectData();
+	var editForm = $('#editForm');
+	if (!Feng.validateForm(editForm)) {
+		return;
+	}
+	
+	var data = editForm.serializeObjectFilterNull();
 
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/${context.bizEnName}/update", function(data){
         Feng.success("修改成功!");
         window.parent.${context.bizEnBigName}.table.refresh();
         ${context.bizEnBigName}InfoDlg.close();
-    },function(data){
-        Feng.error("修改失败!" + data.responseJSON.message + "!");
     });
-    ajax.set(this.${context.bizEnName}InfoData);
+    ajax.set(data);
     ajax.start();
 }
 
